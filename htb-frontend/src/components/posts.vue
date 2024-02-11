@@ -1,32 +1,29 @@
 <script setup>
-import {ref} from 'vue'  
-const post_id = ref(0);
-const title = ref('Dumbass cat');
-const img = ref("https://external-preview.redd.it/_SAG0sDDTrhFv33-mJmfvBuA9sxKN4qq5X7Mbk-NztQ.jpg?auto=webp&s=bf2014f99fbda79ed9cd8fb4b9673e7ff09825f5");
-const user = ref('veal');
-const content = ref('Look at this image of this cat. Why is he standing...');
+//defineProps(['post_id'],['title'],['img'],['user'],['content'])
+defineProps(['post'])
 </script>
 
 <template>
   <div class="post">
     <div class="post-header">
       <div class="post-image">
-	<img v-bind:src="img" />
-	<a v-bind:href="img" class="image-link">{{img}}</a>
+	<img v-bind:src="post.img" />
+	<a v-bind:href="post.img" class="image-link">{{post.img}}</a>
       </div>
       <div class="post-info">
-	<h2>{{title}} - #{{post_id}}</h2>
+	<h2>{{post.title}} - #{{post.id}}</h2>
 	<div class="post-content">
-      <p>{{content}}</p>
+      <p>{{post.content}}</p>
       </div>
       </div>
       </div>
-    <p class="user-name">Posted by {{user}}</p>
+    <p class="user-name">Posted by {{post.user}}</p>
   </div>
 </template>
 <script>
 export default {
-name: 'Posts',
+    name: 'Posts',
+    props: ['post']
 };
 </script>
 <style scoped>
