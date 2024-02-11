@@ -5,7 +5,8 @@
 We're making this app as a way to explore both Vue.js and Flask
 
 *How do i run it?*
-To run the entire application, execute the [[file:./deploy.sh][deploy]] script (not yet implemented)
+
+To run the entire application, execute the [[file:./deploy.sh][deploy]] script 
 #+BEGIN_SRC BASH
 ./deploy.sh
 #+END_SRC
