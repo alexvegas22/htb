@@ -15,9 +15,7 @@ const content = ref('Look at this image of this cat. Why is he standing...');
 	<a v-bind:href="img" class="image-link">{{img}}</a>
       </div>
       <div class="post-info">
-	<h2>{{title}}</h2>
-	<p>#{{post_id}}</p>
-	
+	<h2>{{title}} - #{{post_id}}</h2>
 	<div class="post-content">
       <p>{{content}}</p>
       </div>
@@ -62,11 +60,12 @@ color : #999999
     width : 70%;
 }
 .post-content{
-    background : #999999;
-    color : black;
+
+    color : whitesmoke;
     margin : 0;
     padding : 15px;
     text-align: left;
+    
 }
 
 .user-name{
