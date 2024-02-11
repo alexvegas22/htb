@@ -18,5 +18,5 @@ npm run dev
 And for the backend :
 #+BEGIN_SRC BASH
 cd htb-backend
-flask --app hello run
+flask --app main run
 #+END_SRC
