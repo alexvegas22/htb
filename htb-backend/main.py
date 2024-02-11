@@ -1,12 +1,8 @@
 from flask import Flask, request
 
-
 app = Flask(__name__)
 
 from markupsafe import escape
-
-url_for('static', filename='style.css')
-
     
 @app.route("/")
 def hello_world():

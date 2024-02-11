@@ -1,4 +1,4 @@
-#!/home/alex/Projects/Python/htb/.venv/bin/python3
+#!/home/alex/Projects/Python/htb/htb-backend/.venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
