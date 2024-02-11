@@ -3,7 +3,7 @@
     <div class="navbar-brand">
       <a class="navbar-item" href="#">
         <!-- Your logo or brand text goes here -->
-        My Vue App
+        Alex and Ben App
       </a>
     </div>
 
@@ -26,9 +26,10 @@ export default {
 <style scoped>
 /* Your navbar styles go here */
 .navbar {
-  background-color: #3498db;
+  background-color: #344459;
   padding: 1rem;
   color: #fff;
+  margin-bottom: 1rem;
 }
 
 .navbar-brand {

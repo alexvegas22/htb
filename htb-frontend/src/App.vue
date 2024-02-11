@@ -1,17 +1,19 @@
 <template>
   <div id="app">
     <Navbar />
+    <Posts />
     <router-view />
   </div>
 </template>
 
 <script>
 import Navbar from './components/navbar.vue';
-
+import Posts from './components/posts.vue';
 export default {
   name: 'App',
   components: {
-    Navbar,
+Navbar,
+Posts
   },
 };
 </script>
@@ -26,6 +28,5 @@ body {
 
 #app {
   text-align: center;
-  margin-top: 60px;
 }
 </style>

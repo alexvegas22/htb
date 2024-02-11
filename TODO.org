@@ -5,6 +5,9 @@
     + Poster id
     + Header Image
     + Text post
+    + Replies
+      + Add a reply (button)
+      
   + Create post button
   + Add navbar
   + Add footer
@@ -12,6 +15,7 @@
   + Pick an aesthetic/theme
 + API elements
   + GET /posts (get all posts)
+  + GET /posts/{id}/replies (get all replies from post by id)
   + GET /users (get all users)
   + GET /users/{user_id} (get user by id)
   + GET /users/{user_id}/posts (get all posts by user id)
@@ -24,6 +28,4 @@ Put any ideas you have here, they'll be moved to the todo list or you can add it
 if you have a good idea of what you want and what that thing needs.
 
 New elements should be surrounded by **double asterisks**. The asterisks can be removed after being viewed.
-  
 
-      
