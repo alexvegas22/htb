@@ -1,0 +1,29 @@
+*Things to do*
++ App elements
+  + Posts elements
+    + Generated post counter
+    + Poster id
+    + Header Image
+    + Text post
+  + Create post button
+  + Add navbar
+  + Add footer
+  + Pick a name for the app
+  + Pick an aesthetic/theme
++ API elements
+  + GET /posts (get all posts)
+  + GET /users (get all users)
+  + GET /users/{user_id} (get user by id)
+  + GET /users/{user_id}/posts (get all posts by user id)
+  + POST /posts (create a post)
+  + PUT /posts/{id} (edit a post by id)
+
+*Suggestions*
+
+Put any ideas you have here, they'll be moved to the todo list or you can add it yourself
+if you have a good idea of what you want and what that thing needs.
+
+New elements should be surrounded by **double asterisks**. The asterisks can be removed after being viewed.
+  
+
+      
