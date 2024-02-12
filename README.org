@@ -20,5 +20,5 @@ And for the backend :
 #+BEGIN_SRC BASH
 cd api
 . .venv/bin/activate
-python -m flask --app main run
+python -m flask run
 #+END_SRC
