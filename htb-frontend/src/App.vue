@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Navbar />
+    <CreatePost />
     <General />
     <router-view />
   </div>
@@ -9,11 +10,13 @@
 <script>
 import Navbar from './components/navbar.vue';
 import General from './components/general.vue';
+import CreatePost from './components/create-post.vue';
 export default {
   name: 'App',
   components: {
-Navbar,
-General
+      Navbar,
+      General,
+      CreatePost
   },
 };
 </script>
