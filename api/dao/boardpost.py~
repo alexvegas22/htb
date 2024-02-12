@@ -1,2 +1,0 @@
-def getBoardPost():
-    board = [["1","Post Title","This is my first board post"]]
