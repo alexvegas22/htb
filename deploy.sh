@@ -1,7 +1,7 @@
 #!/bin/bash
-cd htb-backend/
+cd api/
 . .venv/bin/activate
-python -m flask --app main run &
+python -m flask run &
 cd ..
 cd htb-frontend/
 npm install
