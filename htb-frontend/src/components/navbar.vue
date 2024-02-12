@@ -3,7 +3,7 @@
     <div class="navbar-brand">
       <a class="navbar-item" href="#">
         <!-- Your logo or brand text goes here -->
-        Alex and Ben App
+        Awesome Boards
       </a>
     </div>
 

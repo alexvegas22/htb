@@ -15,7 +15,7 @@
     v-for="post in posts"
     
     :post='post'
-    ><h1>Hello</h1></Posts>
+    />
 </template>
 
 <script>
