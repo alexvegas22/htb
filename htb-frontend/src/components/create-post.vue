@@ -1,37 +1,52 @@
 <script setup>
-import {ref} from 'vue';
+import { ref } from 'vue';
 import axios from 'axios';
-const title = ref()
-const image = ref()
-const content = ref()
-const isHidden = ref(true)
-function createPost(){
+
+const title = ref('');
+const image = ref('');
+const content = ref('');
+const isHidden = ref(true);
+const url = ref('http://localhost:5000/posts');
+
+const createPost = async () => {
     try {
-	const postData = {
-	    title : title,
-	    image : image,
-	    content : content
-	}
+        const postData = {
+            title: title.value,
+            image: image.value,
+            content: content.value
+        };
+        const response = await axios.post(url.value, postData);
+        console.log('Response:', response.data);  // You can handle the response as needed
     } catch (error) {
-	console.error('Error:', error.message);
+        console.error('Error:', error.message);
     }
 };
-function  hideForm() {
-    isHidden.value = !isHidden.value
+
+function hideForm() {
+    isHidden.value = !isHidden.value;
 }
-</script >
+</script>
+
 <template>
-<button  @click="hideForm" class="post-button">Create a new post</button>
-<form :class="{ hidden : isHidden }" class="post-form">
-   <label for="title">Title :</label><br>
-  <input v-model="title"><br>
-   <label for="image">Image link :</label><br>
-  <input v-model="image"><br>
-   <label for="content"> Text :</label><br>
-   <input v-model="content"><br>
-   <button @click="createPost">Post</button><br>
-  </form>
+  <div>
+    <button @click="hideForm" class="post-button">Create a new post</button>
+    <form :class="{ hidden: isHidden }" class="post-form">
+      <label for="title">Title :</label><br>
+      <input v-model="title"><br>
+
+      <label for="image">Image link :</label><br>
+      <input v-model="image"><br>
+
+      <label for="content"> Text :</label><br>
+      <input v-model="content"><br>
+
+      
+      <button @click.prevent="createPost">Submit</button>
+    </form>
+  </div>
 </template>
+
+
 <script>
   export default {
   name: 'Create-post',
