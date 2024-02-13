@@ -18,7 +18,8 @@ npm run dev
 #+END_SRC
 And for the backend :
 #+BEGIN_SRC BASH
-cd api
-. .venv/bin/activate
-python -m flask run
+python -m venv .venv
+pip install -r api/requirements.txt
+source .venv/bin/activate
+flask run &
 #+END_SRC
