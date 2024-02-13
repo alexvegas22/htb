@@ -7,12 +7,12 @@ const isHidden = ref(true)
 function createPost(){
     alert("Post created (Not!) \n Title : "+ title.value+"\n Image : "+image.value+"\n Text : "+content.value)
 }
-function hide(){
+function hideForm(){
     isHidden = false
 }
 </script >
 <template>
-<button class="post-button" @click="isHidden=false">Create a new post</button>
+<button  @click="hideForm" class="post-button">Create a new post</button>
 <form :class="{ hidden : isHidden }" class="post-form">
    <label for="title">Title :</label><br>
   <input v-model="title"><br>
