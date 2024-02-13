@@ -1,14 +1,23 @@
 <script setup>
-import {ref} from 'vue'
+import {ref} from 'vue';
+import axios from 'axios';
 const title = ref()
 const image = ref()
 const content = ref()
 const isHidden = ref(true)
 function createPost(){
-    alert("Post created (Not!) \n Title : "+ title.value+"\n Image : "+image.value+"\n Text : "+content.value)
-}
-function hideForm(){
-    isHidden = false
+    try {
+	const postData = {
+	    title : title,
+	    image : image,
+	    content : content
+	}
+    } catch (error) {
+	console.error('Error:', error.message);
+    }
+};
+function  hideForm() {
+    isHidden.value = !isHidden.value
 }
 </script >
 <template>
@@ -24,10 +33,10 @@ function hideForm(){
   </form>
 </template>
 <script>
-
   export default {
   name: 'Create-post',
-};
+  };
+
 </script>
 <style scoped>
   .post-button{
