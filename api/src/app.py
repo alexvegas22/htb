@@ -1,7 +1,9 @@
 from flask import Flask, request
-
+from flask_cors import CORS
 
 app = Flask(__name__)
+
+CORS(app)
 
 posts =  [
       {'id':1,
@@ -14,12 +16,19 @@ posts =  [
        'img' :"https://i.redd.it/2adub8se2dlb1.jpg",
        'user':'veal',
        'content' :'Okay, this dog is kinda freaky'},
-      
   ]
 
 @app.route('/posts')
 def getPosts():
-    return posts
+    return getPosts()
+
 @app.post('/posts')
 def login_post():
     return createPost()
+
+def getPosts():
+    return posts
+
+def createPost(post):
+    posts.append({post})
+    

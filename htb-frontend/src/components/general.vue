@@ -1,29 +1,29 @@
-<script setup>
-  import {ref} from 'vue'
-  import Posts from './posts.vue'
-  const posts = ref([
-      {id:1, title :'Dumbass cat', img :"https://external-preview.redd.it/_SAG0sDDTrhFv33-mJmfvBuA9sxKN4qq5X7Mbk-NztQ.jpg?auto=webp&s=bf2014f99fbda79ed9cd8fb4b9673e7ff09825f5", user:'veal', content :'Look at this image of this cat. Why is he standing...'},
-      
-      {id:2, title :'Strange dog', img :"https://i.redd.it/2adub8se2dlb1.jpg", user:'veal', content :'Okay, this dog is kinda freaky'},
-      
-  ]);
-</script>
-
 <template>
   <h1>General</h1>
   <Posts
-    v-for="post in posts"
+    v-for="(item) in posts"
     
-    :post='post'
+    :post='item'
     />
 </template>
 
 <script>
-  export default {
-      name : 'General',
-      components: {Posts},
-      props: ['posts']
-  }
+  import {ref, watchEffect} from 'vue'
+import Posts from './posts.vue'
+export default {
+    components: {
+	Posts
+    },
+setup() {
+    const posts = ref([]);
+    watchEffect( async () => {
+    posts.value = await (await fetch(`http://localhost:5000/posts`)).json()
+    });
+    return {
+	posts
+    };
+}
+};
 </script>
 
 <style scoped>

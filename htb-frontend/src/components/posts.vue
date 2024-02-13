@@ -1,8 +1,3 @@
-<script setup>
-//defineProps(['post_id'],['title'],['img'],['user'],['content'])
-defineProps(['post'])
-</script>
-
 <template>
   <div class="post">
     <div class="post-header">
@@ -22,8 +17,9 @@ defineProps(['post'])
 </template>
 <script>
 export default {
-    name: 'Posts',
-    props: ['post']
+    props: {
+	post: Object
+    }
 };
 </script>
 <style scoped>
