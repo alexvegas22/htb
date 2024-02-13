@@ -1,8 +1,7 @@
 #!/bin/bash
-cd api/
-. .venv/bin/activate
-python -m flask run &
-cd ..
+python -m venv .venv
+source .venv/bin/activate
+flask run &
 cd htb-frontend/
 npm install
 npm run dev &
