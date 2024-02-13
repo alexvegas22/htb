@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -18,17 +18,29 @@ posts =  [
        'content' :'Okay, this dog is kinda freaky'},
   ]
 
-@app.route('/posts')
+@app.route('/posts', methods=['GET','POST'])
 def getPosts():
-    return getPosts()
+    # handle the POST request
+    if request.method == 'POST':
+        data = request.get_json()
 
-@app.post('/posts')
-def login_post():
-    return createPost()
+        post = {
+            'id': len(posts),
+            'title': data['title'],
+            'img': data['image'],
+            'user': 'veal',
+            'content': data['content']
+        }
+
+        print(post)
+        createPost(post)
+    # otherwise handle the GET request
+    return getPosts()
 
 def getPosts():
     return posts
 
 def createPost(post):
-    posts.append({post})
+   
+     return posts.append(post)
     
