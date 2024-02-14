@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div id="app" class="layout">
     <Navbar />
-    <CreatePost />
+    <Profile />
     <General />
     <router-view />
   </div>
@@ -11,24 +11,27 @@
 import Navbar from './components/navbar.vue';
 import General from './components/general.vue';
 import CreatePost from './components/create-post.vue';
+import Profile from './components/profile.vue';
 export default {
   name: 'App',
   components: {
       Navbar,
       General,
-      CreatePost
+      CreatePost,
+      Profile
   },
 };
 </script>
 
 <style>
-/* Your global styles go here */
-body {
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
+  .layout{
+      display : grid;
+      grid-template : 'nav nav nav'
+		      'profile feed feed';
+      margin : auto;
+      height : 100vh;
+  }
+  
 #app {
   text-align: center;
 }

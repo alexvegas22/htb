@@ -1,5 +1,5 @@
 <template>
-  <nav class="rounded-container">
+  <nav class="nav rounded-container">
     <div class="navbar-brand">
       <router-link to="/" class="navbar-item" href="#">
         <!-- Your logo or brand text goes here -->
@@ -25,6 +25,9 @@ export default {
 
 <style scoped>
 /* Your navbar styles go here */
+.nav{
+    grid-area : nav;
+}
 
 .navbar-brand {
     font-size: 1.5rem;

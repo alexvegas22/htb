@@ -93,4 +93,19 @@ body {
      margin-bottom: 1rem;
      color : black;
      padding : 1rem;
+     box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
 }
+.post-button{
+    color : #49465d;
+    background: #c9c6dd;
+    padding : 10px;
+    border-radius : 25px;
+    transition:
+    color 0.5s,
+    filter 0.5s;
+}
+
+.post-button:hover{
+    filter : contrast(2);
+}
+

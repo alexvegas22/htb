@@ -1,10 +1,11 @@
 <template>
-  <h1>General</h1>
+<div class="feed">
   <Posts
     v-for="(item) in posts"
     
     :post='item'
     />
+</div>
 </template>
 
 <script>
@@ -27,5 +28,9 @@ setup() {
 </script>
 
 <style scoped>
-background : --color-background-soft
+.feed{
+    grid-area: feed;
+    overflow-y : auto;
+    
+}
 </style>

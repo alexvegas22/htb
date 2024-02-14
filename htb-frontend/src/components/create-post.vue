@@ -54,23 +54,12 @@ function hideForm() {
 
 </script>
 <style scoped>
-  .post-button{
-  font-size:24px;
-  background:none;
-  color : whitesmoke;
-  text-decoration:underline;
-  }
-  
-  .post-button:hover{
-  color : #934488
-  }
-
-  .post-form{
- display : flex;
+.post-form{
+    display : flex;
     flex-direction : column;
  
-  }
-  .hidden{
-     display:none;
-  }
+}
+.hidden{
+    display:none;
+}
 </style>
