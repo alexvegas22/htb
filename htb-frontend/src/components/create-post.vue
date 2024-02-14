@@ -9,6 +9,7 @@ const isHidden = ref(true);
 const url = ref('http://localhost:5000/posts');
 
 const createPost = async () => {
+    if (title.value && image.value && content.value){
     try {
         const postData = {
             title: title.value,
@@ -19,7 +20,7 @@ const createPost = async () => {
         console.log('Response:', response.data);  // You can handle the response as needed
     } catch (error) {
         console.error('Error:', error.message);
-    }
+    }}
 };
 
 function hideForm() {
@@ -29,8 +30,8 @@ function hideForm() {
 
 <template>
   <div>
-    <button @click="hideForm" class="post-button">Create a new post</button>
-    <form :class="{ hidden: isHidden }" class="post-form rounded-container">
+    <button @click="hideForm" :class="{ hidden: !isHidden }" class="post-button">Create a new post</button>
+    <form :class="{ hidden: isHidden }" class="post-form">
       <label for="title">Title :</label><br>
       <input v-model="title"><br>
 
@@ -57,9 +58,24 @@ function hideForm() {
 .post-form{
     display : flex;
     flex-direction : column;
+    color : #49465d;
+    background: #c9c6dd;
+    padding : 10px;
+    border-radius : 5px;
+    transition:
+    color 0.5s,
+    filter 0.5s;
  
 }
 .hidden{
     display:none;
+}
+input{
+    width : auto;
+    margin : auto;
+}
+button {
+    margin : auto;
+    width : auto;
 }
 </style>
