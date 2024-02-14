@@ -31,13 +31,13 @@ export default {
 
 .post-header{
     display : flex;
-justify-content: space-between;
+    justify-content: space-between;
     padding :10px 15px;
 }
 .post-image{
 display : flex;
 flex-direction : column;
-width: 30%;
+width : 250px;
 }
 .image-link{
 height : 25px;
