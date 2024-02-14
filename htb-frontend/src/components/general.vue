@@ -27,5 +27,5 @@ setup() {
 </script>
 
 <style scoped>
-
+background : --color-background-soft
 </style>
