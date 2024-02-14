@@ -1,5 +1,5 @@
 <template>
-  <div class="post">
+  <div class="post rounded-container">
     <div class="post-header">
       <div class="post-image">
 	<img v-bind:src="post.img" />
@@ -27,11 +27,6 @@ export default {
 .post{
     display : flex;
     flex-direction : column;
-    background : #334455;
-    width: 95%;
-    margin : auto;
-    border-top : 2px solid gray;
-    border-bottom : 2px solid gray;
 }
 
 .post-header{
@@ -54,7 +49,6 @@ color : #999999
 }
 .post-content{
 
-    color : whitesmoke;
     margin : 0;
     padding : 15px;
     text-align: left;

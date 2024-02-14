@@ -1,10 +1,10 @@
 <template>
-  <nav class="navbar">
+  <nav class="rounded-container">
     <div class="navbar-brand">
-      <a class="navbar-item" href="#">
+      <router-link to="/" class="navbar-item" href="#">
         <!-- Your logo or brand text goes here -->
         Awesome Boards
-      </a>
+      </router-link>
     </div>
 
     <div class="navbar-menu">
@@ -25,23 +25,18 @@ export default {
 
 <style scoped>
 /* Your navbar styles go here */
-.navbar {
-  background-color: #344459;
-  padding: 1rem;
-  color: #fff;
-  margin-bottom: 1rem;
-}
 
 .navbar-brand {
-  font-size: 1.5rem;
+    font-size: 1.5rem;
+    color : black;
 }
 
 .navbar-item {
-  color: #fff;
+  color: black;
   margin-right: 1rem;
 }
 
 .navbar-item:hover {
-  text-decoration: underline;
+    color : gray;
 }
 </style>
