@@ -6,13 +6,13 @@
 	<a v-bind:href="post.img" class="image-link">{{post.img}}</a>
       </div>
       <div class="post-info">
-	<h2>{{post.title}} - #{{post.id}}</h2>
+	<h2>{{post.title}}</h2>
 	<div class="post-content">
       <p>{{post.content}}</p>
       </div>
       </div>
       </div>
-    <p class="user-name">Posted by {{post.user}}</p>
+    <p class="user-name"> #{{post.id}}</p>
   </div>
 </template>
 <script>

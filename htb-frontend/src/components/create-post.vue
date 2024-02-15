@@ -20,7 +20,12 @@ const createPost = async () => {
         console.log('Response:', response.data);  // You can handle the response as needed
     } catch (error) {
         console.error('Error:', error.message);
-    }}
+    }
+	isHidden.value = true;
+	title.value = ""
+	image.value = ""
+	content.value = ""
+    }
 };
 
 function hideForm() {
@@ -40,11 +45,16 @@ function hideForm() {
 
       <label for="content"> Text :</label><br>
       <input v-model="content"><br>
+       <label for="color"> Color :</label><br>
+      <input type="color" v-model="color"><br>
+
 
       
       <button @click.prevent="createPost">Submit</button>
     </form>
   </div>
+ 
+
 </template>
 
 
@@ -74,8 +84,34 @@ input{
     width : auto;
     margin : auto;
 }
-button {
-    margin : auto;
-    width : auto;
+
+
+.form-container {
+  max-width: 350px;
+  margin: auto;
 }
+
+.contact-form {
+  display: grid;
+  gap: 15px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 </style>
