@@ -3,7 +3,7 @@
     <div class="navbar-brand">
       <router-link to="/" class="navbar-item" href="#">
         <!-- Your logo or brand text goes here -->
-        Awesome Boards
+       HTB
       </router-link>
     </div>
 
