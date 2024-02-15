@@ -2,7 +2,6 @@
   <div id="app" class="layout">
     <Navbar />
     <Profile />
-    <General />
     <router-view />
   </div>
 </template>
@@ -12,15 +11,19 @@ import Navbar from './components/navbar.vue';
 import General from './components/general.vue';
 import CreatePost from './components/create-post.vue';
 import Profile from './components/profile.vue';
+import Sock from './components/sock.vue';
+
 export default {
   name: 'App',
   components: {
       Navbar,
       General,
       CreatePost,
-      Profile
+      Profile,
+      Sock
   },
 };
+
 </script>
 
 <style>

@@ -9,8 +9,8 @@
 
     <div class="navbar-menu">
       <div class="navbar-end">
-        <router-link to="/" class="navbar-item">Home</router-link>
-        <router-link to="/about" class="navbar-item">About</router-link>
+        <router-link to="/" class="navbar-item">Feed</router-link>
+        <router-link to="/sock" class="navbar-item">Sock</router-link>
         <!-- Add more navigation links as needed -->
       </div>
     </div>
@@ -27,6 +27,7 @@ export default {
 /* Your navbar styles go here */
 .nav{
     grid-area : nav;
+    height : fit-content;
 }
 
 .navbar-brand {
