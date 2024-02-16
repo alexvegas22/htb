@@ -19,7 +19,7 @@ posts =  [
   ]
 
 @app.route('/posts', methods=['GET','POST'])
-def getPosts():
+def posts_route():
     # handle the POST request
     if request.method == 'POST':
         data = request.get_json()
@@ -31,7 +31,6 @@ def getPosts():
             'user': 'veal',
             'content': data['content']
         }
-
         print(post)
         createPost(post)
     # otherwise handle the GET request
@@ -41,6 +40,5 @@ def getPosts():
     return posts
 
 def createPost(post):
-   
      return posts.append(post)
     

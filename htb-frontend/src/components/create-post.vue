@@ -45,8 +45,7 @@ function hideForm() {
 
       <label for="content"> Text :</label><br>
       <input v-model="content"><br>
-       <label for="color"> Color :</label><br>
-      <input type="color" v-model="color"><br>
+
 
 
       
