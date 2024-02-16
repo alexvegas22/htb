@@ -1,7 +1,6 @@
 <template>
   <div id="app" class="layout">
     <Navbar />
-    <Profile />
     <router-view />
   </div>
 </template>
@@ -27,13 +26,11 @@ export default {
 </script>
 
 <style>
-  .layout{
-      display : grid;
-      grid-template : 'nav nav nav'
-		      'profile feed feed';
-      margin : auto;
-      height : 100vh;
-  }
+.layout {
+    display:flex;
+    flex-direction : column;
+    height : 100vh;
+}
   
 #app {
   text-align: center;

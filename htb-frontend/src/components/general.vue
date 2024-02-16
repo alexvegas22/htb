@@ -1,36 +1,46 @@
-<template>
-<div class="feed">
-  <Posts
-    v-for="(item) in posts"
-    
-    :post='item'
-    />
-</div>
-</template>
+<!-- Home.vue -->
+<script setup>
+import { ref, watchEffect } from 'vue';
+import Profile from './profile.vue';
+import Posts from './posts.vue';
+import Boards from './boards.vue';
 
-<script>
-  import {ref, watchEffect} from 'vue'
-import Posts from './posts.vue'
-export default {
-    components: {
-	Posts
-    },
-setup() {
-    const posts = ref([]);
-    watchEffect( async () => {
-    posts.value = await (await fetch(`http://localhost:5000/posts`)).json()
-    });
-    return {
-	posts
-    };
-}
+const posts = ref([]);
+
+const fetchData = async () => {
+  try {
+    const response = await fetch('http://localhost:5000/posts');
+    posts.value = await response.json();
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+  }
 };
+
+watchEffect(() => {
+  fetchData();
+});
 </script>
 
+<template>
+  <div class="home-container">
+    <Profile />
+    <div class="feed">
+      <Posts v-for="item in posts" :key="item.id" :post="item" />
+    </div>
+    <Boards />
+  </div>
+</template>
+
 <style scoped>
-.feed{
-    grid-area: feed;
-    overflow-y : auto;
-    
+.home-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.feed {
+  overflow-y: auto;
+  width: 100%;
 }
 </style>
