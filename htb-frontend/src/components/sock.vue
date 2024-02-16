@@ -1,38 +1,50 @@
+<!-- WebSocketExample.vue -->
 <template>
-<div class="rounded-container">
-  <h1>Sock</h1>
-    <button v-on:click="sendMessage('hello')">Send Message</button>
-</div>
+  <div class="rounded-container">
+    <h1>WebSocket Example</h1>
+   
+    <input v-model="message" placeholder="Type a message" />
+    <button @click="sendMessage">Send Message</button>
+    <ul>
+      <li v-for="msg in messages" :key="msg.id">{{ msg.id }}</li>
+    </ul>
+  </div>
+       {{messages}}
 </template>
 
-<script>
-  export default {
-  name: 'App',
-  data: function() {
-    return {
-      connection: null
-    }
-  },
-  created: function() {
-    console.log("Starting connection to WebSocket Server")
-    this.connection = new WebSocket("wss://echo.websocket.org")
+<script setup>
+import { ref, onMounted } from 'vue';
 
-    this.connection.onmessage = function(event) {
-      console.log(event);
-    }
+const message = ref('');
+const messages = ref([]);
+let socket = null;
 
-    this.connection.onopen = function(event) {
-      console.log(event)
-      console.log("Successfully connected to the echo websocket server...")
-    }
+const initWebSocket = () => {
+  socket = new WebSocket('ws://localhost:8080');
 
-  },
-  methods: {
-    sendMessage: function(message) {
-      console.log(this.connection);
-      this.connection.send(message);
-    }
-  },
-}
+  socket.addEventListener('open', () => {
+    console.log('WebSocket connected');
+  });
 
+  socket.addEventListener('message', (event) => {
+      const data = JSON.parse(event.data);
+      
+      messages.value.push({ id: new Date().toISOString(), text: data.message });
+  });
+
+  socket.addEventListener('close', () => {
+    console.log('WebSocket closed');
+  });
+};
+
+const sendMessage = () => {
+  if (socket.readyState === WebSocket.OPEN) {
+    socket.send(JSON.stringify({ message: message.value }));
+    message.value = '';
+  }
+};
+
+onMounted(() => {
+  initWebSocket();
+});
 </script>

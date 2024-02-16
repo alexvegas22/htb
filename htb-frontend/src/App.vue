@@ -26,7 +26,11 @@ export default {
 </script>
 
 <style>
-
+.layout {
+    display:flex;
+    flex-direction : column;
+    height : 100vh;
+}
   
 #app {
   text-align: center;
