@@ -2,8 +2,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app,resources={"/*":{"origins":"*"}})
 
-CORS(app)
 
 posts =  [
       {'id':1,
@@ -16,6 +16,11 @@ posts =  [
        'img' :"https://i.redd.it/2adub8se2dlb1.jpg",
        'user':'veal',
        'content' :'Okay, this dog is kinda freaky'},
+    {'id' : 3,
+       'title' :'Funny monkey',
+       'img' :"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhc_l6f9V0b-0pU_CjVpplngWFbB0JFP0Uhw&usqp=CAU",
+       'user':'veal',
+       'content' :'Teehee this monkey is so silly!!!'},
   ]
 
 @app.route('/posts', methods=['GET','POST'])
@@ -41,4 +46,6 @@ def getPosts():
 
 def createPost(post):
      return posts.append(post)
-    
+
+if __name__ == "__main__":
+    app.run(app, debug=True)
