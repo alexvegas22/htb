@@ -11,7 +11,7 @@ wss.on('connection', function connection(ws) {
   const color = Math.floor(Math.random() * 360);
   const metadata = { id, color };
 
-  clients.set(ws, metadata);
+    clients.set(ws, metadata);
 
   // Send the existing messages array to the new connection
  // ws.send(JSON.stringify({ messages: messages.map(msg => ({ id: msg.id, text: msg.text })) }));
@@ -20,14 +20,14 @@ wss.on('connection', function connection(ws) {
     console.log('received: %s', data);
 
     const parsedData = JSON.parse(data);
-      const { id, text } = parsedData;
+      const { event, id, text } = parsedData;
       
 
     // Push a new message object to the messages array
-    messages.push({ id, text });
+      messages.push({ event, id, text });
 
     // Broadcast the new message to all connected clients
-      broadcast({id,text});
+      broadcast({event, id, text});
   });
 
   ws.on('close', () => {
