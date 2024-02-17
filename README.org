@@ -20,6 +20,13 @@ And for the backend :
 #+BEGIN_SRC BASH
 python -m venv .venv
 pip install -r api/requirements.txt
-source .venv/bin/activate
+. .venv/bin/activate
+cd api/
 flask run &
+#+END_SRC
+For the sock chat :
+#+BEGIN_SRC BASH
+cd websocket/
+npm install
+node index.js &
 #+END_SRC
