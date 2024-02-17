@@ -26,7 +26,6 @@ flask run &
 #+END_SRC
 For the sock chat :
 #+BEGIN_SRC BASH
-cd ..
 cd websocket/
 npm install
 node index.js &
