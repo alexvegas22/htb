@@ -55,7 +55,7 @@ const initWebSocket = () => {
       console.log('WebSocket connected');
        if (socket.readyState === WebSocket.OPEN) {
 	   socket.send(JSON.stringify({event: 'join', id:name.value }));
-	   messages.value.push({ event : 'join', id: name.value });
+	   //messages.value.push({ event : 'join', id: name.value });
   }
 
     
@@ -63,14 +63,12 @@ const initWebSocket = () => {
 
     socket.addEventListener('message', (event) => {
 	const data = JSON.parse(event.data);
-	if (data.text) {
-	    messages.value.push({ event : 'message', id: data.id, text: data.text });
-	    }
+	    messages.value.push({ event : data.event, id: data.id, text: data.text });
+	    
   });
 
   socket.addEventListener('close', () => {
       console.log('WebSocket closed');
-      messages.value.push({ event : 'leave', id: name.value });
       socket.send(JSON.stringify({event: 'leave', id:name.value }));
   });
 };
