@@ -1,4 +1,4 @@
-<!-- Home.vue -->
+<!-- general.vue -->
 <script setup>
 import { ref, watchEffect } from 'vue';
 import Profile from './profile.vue';

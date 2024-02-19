@@ -1,11 +1,11 @@
 #!/bin/bash
-
 python -m venv .venv
-pip install -r api/requirements.txt
 . .venv/bin/activate
+pip install -r api/requirements.txt
 cd api/src/
 flask run &
 
+cd ../..
 cd websocket/
 npm install
 node index.js &

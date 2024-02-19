@@ -1,147 +1,83 @@
-<!-- WebSocketExample.vue -->
-<template>
-<div class="chatbox rounded-container">
-  <div class='header'>
-    <h1 class="titlex">Sock Chat</h1>
-    <label for="name"> Username : </label>
-    <input v-model="name" placeholder="Enter your name" />
-  </div>
-  <div class="response">
-   
-    
-    <p v-for="msg in messages"
-       :key="msg.id"
-       :class="[{'message-sent': msg.id===name}]" class="message">{{msg.id}} : {{ msg.text }}</p>
-  </div>
-  <div class="prompt">
-     <input v-model="message" placeholder="Type a message" />
-    <button @click="sendMessage">Send Message</button>
-</div>
-  </div>
-</template>
-
+<!-- sock.vue -->
 <script setup>
 import { ref, onMounted } from 'vue';
-const name = ref('')
-const message = ref('');
-const messages = ref([]);
-let socket = null;
+ import ChatSock from './sock-chat.vue'
 
-const initWebSocket = () => {
-  socket = new WebSocket('ws://localhost:8080');
+const chat =ref({
+    room: '',
+    name: ''
+})
 
-  socket.addEventListener('open', () => {
-    console.log('WebSocket connected');
-  });
+const joined=ref(false)
 
-    socket.addEventListener('message', (event) => {
-    const data = JSON.parse(event.data);
-    messages.value.push({ id: data.id, text: data.text });
-  });
+function join(){
+    joined.value = true
+}
 
-  socket.addEventListener('close', () => {
-    console.log('WebSocket closed');
-  });
-};
-
-const sendMessage = () => {
-  if (socket.readyState === WebSocket.OPEN) {
-    socket.send(JSON.stringify({id:name.value,  text: message.value }));
-    message.value = '';
-  }
-};
-
-onMounted(() => {
-  initWebSocket();
-});
+function leave(){
+    joined.value = false
+}
 </script>
-<style scoped>
-  .chatbox{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-content: stretch;	   
-}
-.title{
-    align-self: flex-start;
-    padding: 5px 10px;
-}
-.header{
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
 
-.response{
-    min-height: 300px;
-    max-height: 500px;
+<template>
+  <div class="home-container">
+  <div class="rounded-container join-room"  v-if="!joined">
+    <h1>Rooms</h1>
+    <div class="row">
+      <label for="chat.name"> Username : </label> 
+      <input v-model="chat.name" placeholder="Enter your name" />  
+    </div>
+    <div class="row">
+      <label for="chat.room"> Room : </label> 
+      <input v-model="chat.room" placeholder="Enter room number" /> 
+    </div>
+      <button @click.prevent="join">Join Room</button>
+  </div>
+
+  <div class="rounded-container"  v-if="joined">
+    <h1>Room</h1>
+   <h3>Logged in as {{chat.name}} </h3>
+    
+    <button @click.prevent="leave">Leave Room</button>
+  </div>
+  
+<ChatSock v-if="joined" :chat="chat"/>
+</div>
+
+</template>
+
+
+
+<script>
+
+
+export default {
+    name : 'Sock',
+    components : {
+	ChatSock
+    }
+}
+</script>
+
+<style scoped>
+
+.home-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.join-room{
     align-self: center;
+    margin: auto;
     display : flex;
     flex-direction : column;
-    align-items: flex-start;
-    overflow-y:auto;
-    background : #e9e8f1;
-    padding : 5px;
-    height : 100%;
-    width : 100%;
+    padding : 25px;
 }
-.prompt{
+.row{
     display : flex;
-    flex-direction : row;
-    align-self: center;
+    justify-content: space-between;
+    margin : 10px;
     width : 100%;
-    background-color: whitesmoke;
-    align-items: stretch;
-    justify-content : space-between;
-		     
-}
-.prompt:last-child{
-    align-self: flex-end;
-    justify-self: flex-end;
-}
-
-button, input {
-	padding: 5px;
-	font: inherit;
-	
-	
-}
-input{
-    color:black;
-    width: 70%;
-}
-
-button {
-    cursor: pointer;
-    bakcground: green;
-}
-
-.message{
-    border-radius: 5px;
-    background :#c9c6dd;
-    padding : 3px 7px 5px 7px;
-    height : fit-content;
-    width: fit-content;
-    margin : 3px;
-}
-
-.message-sent{
-    text-align: right;
-   
-    align-self:flex-end;
-    margin-left : 15px;
- }
-
-.message-received{
-    
-    text-align: left;
-    justify-self:flex-start;
-    margin-right : 15px;
-}
-
-.message-typing{
-    text-align:center;
-   justify-content:flex-start;
 }
 
 </style>
