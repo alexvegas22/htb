@@ -15,7 +15,7 @@ wss.on('connection', function connection(ws, client) {
     clients.set(ws, metadata);
 
   // Send the existing messages array to the new connection
- // ws.send(JSON.stringify({ messages: messages.map(msg => ({ id: msg.id, text: msg.text })) }));
+    ws.send(JSON.stringify({ messages: messages.map(msg => ({ event: msg.event, id: msg.id, text: msg.text })) }));
 
     ws.on('open', function open() {
 	ws.send('hello');
@@ -36,7 +36,8 @@ wss.on('connection', function connection(ws, client) {
     });
     
     ws.on('close', () => {
-      clients.delete(ws);
+	broadcast({event : 'leave', id});
+	clients.delete(ws);
     });
 });
 
