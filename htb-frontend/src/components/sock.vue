@@ -11,7 +11,9 @@ const chat =ref({
 const joined=ref(false)
 
 function join(){
-    joined.value = true
+    if (room.value && name.value){
+	joined.value = true
+    }
 }
 
 function leave(){

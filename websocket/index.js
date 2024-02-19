@@ -37,7 +37,7 @@ wss.on('connection', function connection(ws, client) {
 	const clientMetadata = clients.get(ws);
         const username = clientMetadata ? clientMetadata.username : 'Unknown';
 
-	broadcast({event : 'leave', username: username, room: room});
+	broadcast({event : 'leave', username: username, room: clientMetadata.room});
 	clients.delete(ws);
     });
 });

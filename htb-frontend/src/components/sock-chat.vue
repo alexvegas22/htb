@@ -16,7 +16,7 @@
      }">
       
       <div v-if="msg.event=='message'" >
-	<p>{{msg.username}}</p>
+	<div class="username">{{msg.username}}</div>
 	 <div  class="chat-bubble"> {{ msg.text }} </div>
       </div>
       
@@ -171,7 +171,10 @@ button {
     bakcground: green;
 }
 
-
+.username {
+    padding-left : 5px;
+    padding-right: 5px;
+}
 .chat-bubble{
      border-radius: 5px;
     background :#c9c6dd;
