@@ -1,4 +1,4 @@
-<!-- WebSocketExample.vue -->
+<!-- sock-chat.vue -->
 <template>
 <div class="chatbox rounded-container">
   <div class='header'>
@@ -8,17 +8,26 @@
   <div class="response">
     
     <div v-for="msg in messages"
-	 :key="msg.username" >
+	 :key="msg.username"
+	 :class="{
+        'event': msg.event !== 'message',
+        'message-sent': msg.event === 'message' && msg.username === name,
+        'message-received': msg.event === 'message' && msg.username !== name
+     }">
       
-      <p v-if="msg.event=='message'" :class="[{'message-sent': msg.username===name}]" class="message">
-	{{msg.username}} : {{ msg.text }}
-      </p>
+      <div v-if="msg.event=='message'" >
+	<p>{{msg.username}}</p>
+	 <div  class="chat-bubble"> {{ msg.text }} </div>
+      </div>
+      
       <div v-if="msg.event=='join'" class="event">
 	{{msg.username}} joined the room
       </div>
-       <div v-if="msg.event=='leave'" class="event">
+      
+       <div v-if="msg.event=='leave'" >
 	{{msg.username}} left the room
-	</div>
+       </div>
+       
     </div>
   </div>
   <div class="prompt">
@@ -28,7 +37,6 @@
 </div>
 
 </template>
-
 <script setup>
 import { ref, onMounted } from 'vue';
 const message = ref('');
@@ -79,6 +87,7 @@ onMounted(() => {
 });
 </script>
 
+
 <script>
   export default{
       name : 'ChatSock',
@@ -114,6 +123,7 @@ onMounted(() => {
 .event{
     color : red;
     text-align : center;
+    align-self: center;
     
 }
 
@@ -161,8 +171,9 @@ button {
     bakcground: green;
 }
 
-.message{
-    border-radius: 5px;
+
+.chat-bubble{
+     border-radius: 5px;
     background :#c9c6dd;
     padding : 3px 7px 5px 7px;
     height : fit-content;
