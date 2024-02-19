@@ -2,22 +2,22 @@
 <template>
 <div class="chatbox rounded-container">
   <div class='header'>
-    <h1 class="titlex">Sock Chat</h1>
+    <h1 class="titlex">{{chat.room}}</h1>
     
   </div>
   <div class="response">
     
     <div v-for="msg in messages"
-	 :key="msg.id" >
+	 :key="msg.username" >
       
-      <p v-if="msg.event=='message'" :class="[{'message-sent': msg.id===name}]" class="message">
-	{{msg.id}} : {{ msg.text }}
+      <p v-if="msg.event=='message'" :class="[{'message-sent': msg.username===name}]" class="message">
+	{{msg.username}} : {{ msg.text }}
       </p>
       <div v-if="msg.event=='join'" class="event">
-	{{msg.id}} joined the room
+	{{msg.username}} joined the room
       </div>
        <div v-if="msg.event=='leave'" class="event">
-	{{msg.id}} left the room
+	{{msg.username}} left the room
 	</div>
     </div>
   </div>
@@ -33,23 +33,23 @@
 import { ref, onMounted } from 'vue';
 const message = ref('');
 const messages = ref([]);
-const room=ref()
 let socket = null;
 const props = defineProps({
     chat: Object
 })
 const name = ref(props.chat.name)
-
+const room=ref(props.chat.room)
 const initWebSocket = () => {
   socket = new WebSocket('ws://localhost:8080');
 
   socket.addEventListener('open', () => {
       console.log('WebSocket connected');
+        socket.send(JSON.stringify({ event: 'set-name', username : name.value ,room : room.value}));
        if (socket.readyState === WebSocket.OPEN) {
-	   socket.send(JSON.stringify({event: 'join', id: name.value }));
-	   //messages.value.push({ event : 'join', id: name.value });
+	   socket.send(JSON.stringify({event: 'join', username: name.value, room: room.value }));
+	   //messages.value.push({ event : 'join', username: name.value });
        } else {
-	   socket.send(JSON.stringify({event: 'leave', id: name.value }));
+	   socket.send(JSON.stringify({event: 'leave', username: name.value, room: room.value }));
        }
 
     
@@ -57,19 +57,19 @@ const initWebSocket = () => {
 
     socket.addEventListener('message', (event) => {
 	const data = JSON.parse(event.data);
-	    messages.value.push({ event : data.event, id: data.id, text: data.text });
+	    messages.value.push({ event : data.event, username: data.username, text: data.text, room: data.room });
 	    
   });
 
     socket.addEventListener('close', () => {
-	socket.send(JSON.stringify({event: 'leave', id:name.value }));
+	socket.send(JSON.stringify({event: 'leave', username:name.value , room: room.value}));
 	console.log('WebSocket closed');
   });
-};
+}; 
 
 const sendMessage = () => {
   if (socket.readyState === WebSocket.OPEN) {
-    socket.send(JSON.stringify({event: 'message', id:name.value,  text: message.value }));
+    socket.send(JSON.stringify({event: 'message', username:name.value,  text: message.value, room: room.value }));
     message.value = '';
   }
 };

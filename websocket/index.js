@@ -8,42 +8,49 @@ const clients = new Map();
 
 wss.on('connection', function connection(ws, client) {
     ws.on('error', console.error);
-    const id = messageId++;
-    const color = Math.floor(Math.random() * 360);
-    const metadata = { id, color };
-
-    clients.set(ws, metadata);
 
   // Send the existing messages array to the new connection
-    ws.send(JSON.stringify({ messages: messages.map(msg => ({ event: msg.event, id: msg.id, text: msg.text })) }));
+    ws.send(JSON.stringify({ messages: messages.map(msg => ({ event: msg.event, username: msg.username, text: msg.text , room: msg.room})) }));
 
     ws.on('open', function open() {
-	ws.send('hello');
-    });
-    ws.on('message', function message(data) {
-	console.log(`Received message ${data} from user ${client}`);
 	
+    });
+    
+    ws.on('message', function message(data) {
 	
 	const parsedData = JSON.parse(data);
-	const { event, id, text } = parsedData;
-	
-	
+	const { event, username, text, room } = parsedData;
+	if (event=='set-name'){
+	    const metadata = {username, room}
+	    clients.set(ws, metadata);
+	}
+	console.log(`Received message ${data} from user ${username}`);
+
 	// Push a new message object to the messages array
-	messages.push({ event, id, text });
+	messages.push({ event, username, text, room});
 	
 	// Broadcast the new message to all connected clients
-	broadcast({event, id, text});
+	broadcast({event, username, text, room});
     });
     
     ws.on('close', () => {
-	broadcast({event : 'leave', id});
+	const clientMetadata = clients.get(ws);
+        const username = clientMetadata ? clientMetadata.username : 'Unknown';
+
+	broadcast({event : 'leave', username: username, room: room});
 	clients.delete(ws);
     });
 });
 
-// Helper function to broadcast messages to all connected clients
+
 function broadcast(message) {
-  for (const client of clients.keys()) {
-      client.send(JSON.stringify(message));
-  }
+
+    const clientsInRoom = Array.from(clients.entries())
+        .filter(([client, metadata]) => metadata.room === message.room)
+        .map(([client]) => client);
+
+    for (const client of clientsInRoom) {
+        client.send(JSON.stringify(message));
+    }
 }
+
