@@ -2,9 +2,18 @@
 
 *What is our app about*
 
-We're making this app as a way to explore both Vue.js and Flask
+HTB is a Vue.js forum/chat web app.
+We created this as a way to communicate between friends and keep in touch without
+having to rely on social media apps.
+
+*Live Demo*
+
+There's no live demo as of now, still trying to implement features and polish the look
+on the front end, as well as cleaning up the API.
 
 *How do i run it?*
+
+HTB relies on 3 different apps : A vue.js frontend, a Flask API and a NodeJS websocket server.
 
 To run the entire application, execute the [[file:./deploy.sh][deploy]] script 
 #+BEGIN_SRC BASH
@@ -19,14 +28,15 @@ npm run dev
 And for the backend :
 #+BEGIN_SRC BASH
 python -m venv .venv
-pip install -r api/requirements.txt
 . .venv/bin/activate
+pip install -r api/requirements.txt
 cd api/
 flask run &
 #+END_SRC
-For the sock chat :
+For the chatting websocket server :
 #+BEGIN_SRC BASH
 cd websocket/
 npm install
 node index.js &
 #+END_SRC
+
