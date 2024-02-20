@@ -29,8 +29,7 @@
     </div>
   </div>
   <div class="prompt">
-     <input v-model="message" placeholder="Type a message" />
-    <button @click="sendMessage">Send Message</button>
+     <span>>>></span><input v-model="message" placeholder="Type a message" @keydown.enter="sendMessage"/>
 </div>
 </div>
 
@@ -107,7 +106,6 @@ onMounted(() => {
     flex-direction: column;
     justify-content: space-between;
     align-content: stretch;
-    width: 100%;
 }
 .title{
     align-self: flex-start;
@@ -141,9 +139,7 @@ onMounted(() => {
     flex-direction : row;
     align-self: center;
     width : 100%;
-    align-items: stretch;
-    justify-content : space-between;
-		     
+    align-items: stretch;		     
 }
 .prompt:last-child{
     align-self: flex-end;
@@ -151,8 +147,8 @@ onMounted(() => {
 }
 
 input{
-    width: 90%;
-    margin-right : 15px;
+
+    border : none;
 }
 
 button {
