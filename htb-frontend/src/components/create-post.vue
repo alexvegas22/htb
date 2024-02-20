@@ -35,7 +35,7 @@ function hideForm() {
 
 <template>
   <div>
-    <button @click="hideForm" :class="{ hidden: !isHidden }" class="post-button">Create a new post</button>
+    <button @click="hideForm" :class="{ hidden: !isHidden }" >Create a new post</button>
     <form :class="{ hidden: isHidden }" class="post-form">
       <label for="title">Title :</label><br>
       <input v-model="title"><br>
@@ -52,10 +52,7 @@ function hideForm() {
       <button @click.prevent="createPost">Submit</button>
     </form>
   </div>
- 
-
 </template>
-
 
 <script>
   export default {
@@ -67,8 +64,7 @@ function hideForm() {
 .post-form{
     display : flex;
     flex-direction : column;
-    color : #49465d;
-    background: #c9c6dd;
+
     padding : 10px;
     border-radius : 5px;
     transition:
@@ -104,13 +100,6 @@ input {
   padding: 8px;
   margin-bottom: 10px;
   box-sizing: border-box;
-}
-
-button {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
 }
 
 </style>

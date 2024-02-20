@@ -20,7 +20,7 @@ posts =  [
        'title' :'Funny monkey',
        'img' :"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhc_l6f9V0b-0pU_CjVpplngWFbB0JFP0Uhw&usqp=CAU",
        'user':'veal',
-       'content' :'Teehee this monkey is so silly!!!'},
+       'content' :'Teehee this monkey is so silly!!! "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."'},
   ]
 
 @app.route('/posts', methods=['GET','POST'])
@@ -30,7 +30,7 @@ def posts_route():
         data = request.get_json()
 
         post = {
-            'id': len(posts),
+            'id': len(posts)+1,
             'title': data['title'],
             'img': data['image'],
             'user': 'veal',
@@ -46,6 +46,3 @@ def getPosts():
 
 def createPost(post):
      return posts.append(post)
-
-if __name__ == "__main__":
-    app.run(app, debug=True)

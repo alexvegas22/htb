@@ -2,7 +2,7 @@
 <template>
 <div class="chatbox rounded-container">
   <div class='header'>
-    <h1 class="titlex">{{chat.room}}</h1>
+    <h2 class="titlex">{{chat.room}}</h2>
     
   </div>
   <div class="response">
@@ -11,13 +11,11 @@
 	 :key="msg.username"
 	 :class="{
         'event': msg.event !== 'message',
-        'message-sent': msg.event === 'message' && msg.username === name,
-        'message-received': msg.event === 'message' && msg.username !== name
+        'message': msg.event === 'message'
      }">
       
       <div v-if="msg.event=='message'" >
-	<div class="username">{{msg.username}}</div>
-	 <div  class="chat-bubble"> {{ msg.text }} </div>
+	 <div  class="chat-bubble">[{{msg.username}}]$ {{ msg.text }} </div>
       </div>
       
       <div v-if="msg.event=='join'" class="event">
@@ -122,8 +120,7 @@ onMounted(() => {
 }
 .event{
     color : red;
-    text-align : center;
-    align-self: center;
+
     
 }
 
@@ -135,7 +132,6 @@ onMounted(() => {
     flex-direction : column;
     align-items: flex-start;
     overflow-y:auto;
-    background : #e9e8f1;
     padding : 5px;
     height : 100%;
     width : 100%;
@@ -145,7 +141,6 @@ onMounted(() => {
     flex-direction : row;
     align-self: center;
     width : 100%;
-    background-color: whitesmoke;
     align-items: stretch;
     justify-content : space-between;
 		     
@@ -155,52 +150,13 @@ onMounted(() => {
     justify-self: flex-end;
 }
 
-button, input {
-	padding: 5px;
-	font: inherit;
-	
-	
-}
 input{
-    color:black;
-    width: 70%;
+    width: 90%;
+    margin-right : 15px;
 }
 
 button {
     cursor: pointer;
     bakcground: green;
 }
-
-.username {
-    padding-left : 5px;
-    padding-right: 5px;
-}
-.chat-bubble{
-     border-radius: 5px;
-    background :#c9c6dd;
-    padding : 3px 7px 5px 7px;
-    height : fit-content;
-    width: fit-content;
-    margin : 3px;
-}
-
-.message-sent{
-    text-align: right;
-   
-    align-self:flex-end;
-    margin-left : 15px;
- }
-
-.message-received{
-    
-    text-align: left;
-    justify-self:flex-start;
-    margin-right : 15px;
-}
-
-.message-typing{
-    text-align:center;
-   justify-content:flex-start;
-}
-
 </style>

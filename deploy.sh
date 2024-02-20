@@ -2,10 +2,10 @@
 python -m venv .venv
 . .venv/bin/activate
 pip install -r api/requirements.txt
-cd api/src/
+cd api/
 flask run &
 
-cd ../..
+cd ..
 cd websocket/
 npm install
 node index.js &
