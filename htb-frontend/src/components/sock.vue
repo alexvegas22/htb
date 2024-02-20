@@ -20,8 +20,6 @@ import { ref, onMounted } from 'vue';
         return {name:M[0], version:M[1]};
     })();
 
-    console.log(navigator.browserSpecs); //Object { name: "Firefox", version: "42" }
-
 const chat =ref({
     room: '',
     name: ''
@@ -40,6 +38,7 @@ function join(){
 
 function leave(){
     joined.value = false
+    chat.value.room = ''
 }
 
 function processCommand(){
@@ -50,22 +49,55 @@ function processCommand(){
 	log.value.push("Type 'help' for more information")
     }
     else {
-	    log.value.push('['+chat.value.name+']$ '+command.value)
-    
-	
+	log.value.push('['+chat.value.name+']$ '+command.value)
+	const commandArray = command.value.split(' ');
+	switch (commandArray[0]) {
 
-	if (command.value==='help'|command.value==='h'){
+	case 'help' :
 	    log.value.push("These commands are defined internally. Type 'help' to see this list.")
-	    log.value.push("join [-r name] [--room name]")
+	    log.value.push("chatroom [-j name] [--join name]")
 	    log.value.push("clear")
 	    log.value.push("logout")
 	    log.value.push("exit")
-	}
-	if (command.value==='join'){
+	    break;
+
+	case 'chatroom':
+	    if (!commandArray[1]){
+	    log.value.push("No arguments provided.")
+	    log.value.push("Try 'chatroom --help' for more details.")
+	    }
+	    else if (commandArray[1] == '-j'| commandArray[1] == '--join'){
+		if (commandArray[2]){
+		    chat.value.room = commandArray[2]
+		    join()
+		} else {
+		    log.value.push('Missing argument.')
+		    log.value.push("Try 'chatroom --help' for more details.")
+		}
+	    }
+	    else if (commandArray[1] == '-h'| commandArray[1] == '--help'){
+		log.value.push('Usage : chatroom [options]')
+		log.value.push('Options: ')
+		log.value.push('-j --join  [arg]  join the provided room')
+		log.value.push('-h --help         display this list')
+	    }
 	    
-	}
-	else{
-	    log.value.push(command.value+': command not found')
+	    else {
+		log.value.push("chatroom: unrecognized option '"+commandArray[1]+"'")
+	    }
+	    
+	    break;
+
+	case 'clear':
+	    log.value=[]
+	    break;
+	case 'logout':
+	    chat.value.name = ''
+	    log.value=[specs,'Type your username: ']
+	    break;
+	default :
+	    log.value.push(commandArray[0]+': command not found')
+	    break;
 	}
     }
     command.value = ''
