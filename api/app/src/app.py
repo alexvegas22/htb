@@ -1,9 +1,9 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask import Flask
+from app.routes.postRoutes import post_routes
 
 app = Flask(__name__)
 CORS(app,resources={"/*":{"origins":"*"}})
-
+app.register_blueprint(post_routes)
 
 posts =  [
       {'id':1,
@@ -23,23 +23,7 @@ posts =  [
        'content' :'Teehee this monkey is so silly!!! "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."'},
   ]
 
-@app.route('/posts', methods=['GET','POST'])
-def posts_route():
-    # handle the POST request
-    if request.method == 'POST':
-        data = request.get_json()
 
-        post = {
-            'id': len(posts)+1,
-            'title': data['title'],
-            'img': data['image'],
-            'user': 'veal',
-            'content': data['content']
-        }
-        print(post)
-        createPost(post)
-    # otherwise handle the GET request
-    return getPosts()
 
 def getPosts():
     return posts
