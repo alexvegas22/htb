@@ -1,0 +1,10 @@
+from flask import jsonify, request
+from app.dao.post_dao import get_posts, add_post
+
+def get_or_add_posts(request):
+    if request.method == 'GET':
+        return get_posts()
+    elif request.method == 'POST':
+        return add_post(request.get_json()), 201
+    else:
+        return 'Method not allowed', 405

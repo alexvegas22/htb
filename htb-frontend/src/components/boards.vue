@@ -1,6 +1,6 @@
 <template>
   <div class="rounded-container">
-    <h1>Boards</h1>
+    <h2>Boards</h2>
   </div>
 </template>
 

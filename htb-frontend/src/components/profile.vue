@@ -1,10 +1,7 @@
 <template>
   <div class="rounded-container profile-container">
-    Profile Section
-    
-  <CreatePost />
+    <CreatePost />
   </div>
-    
 </template>
 
 <script>
@@ -21,6 +18,5 @@ export default {
 <style scoped>
     .profile-container{
 	grid-area:profile;
-	
     }
 </style>

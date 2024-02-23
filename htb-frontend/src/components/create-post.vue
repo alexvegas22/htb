@@ -3,10 +3,16 @@ import { ref } from 'vue';
 import axios from 'axios';
 
 const title = ref('');
-const image = ref('');
+const image = ref(null);
 const content = ref('');
 const isHidden = ref(true);
-const url = ref('http://localhost:5000/posts');
+const postUrl = ref('http://localhost:5000/posts');
+
+
+const handleFileChange = () => {
+  const selectedFile = image.value.files[0];
+  console.log('Selected File:', selectedFile);
+};
 
 const createPost = async () => {
     if (title.value && image.value && content.value){
@@ -16,8 +22,8 @@ const createPost = async () => {
             image: image.value,
             content: content.value
         };
-        const response = await axios.post(url.value, postData);
-        console.log('Response:', response.data);  // You can handle the response as needed
+        const response = await axios.post(postUrl.value, postData);
+        console.log('Response:', response.data); 
     } catch (error) {
         console.error('Error:', error.message);
     }
@@ -35,13 +41,13 @@ function hideForm() {
 
 <template>
   <div>
-    <button @click="hideForm" :class="{ hidden: !isHidden }" class="post-button">Create a new post</button>
+    <button @click="hideForm" :class="{ hidden: !isHidden }" >Create a new post</button>
     <form :class="{ hidden: isHidden }" class="post-form">
       <label for="title">Title :</label><br>
       <input v-model="title"><br>
 
       <label for="image">Image link :</label><br>
-      <input v-model="image"><br>
+      <input ref="image" type="file" accept="image/*" @change="handleFileChange"><br>
 
       <label for="content"> Text :</label><br>
       <input v-model="content"><br>
@@ -52,10 +58,7 @@ function hideForm() {
       <button @click.prevent="createPost">Submit</button>
     </form>
   </div>
- 
-
 </template>
-
 
 <script>
   export default {
@@ -67,8 +70,6 @@ function hideForm() {
 .post-form{
     display : flex;
     flex-direction : column;
-    color : #49465d;
-    background: #c9c6dd;
     padding : 10px;
     border-radius : 5px;
     transition:
@@ -104,13 +105,6 @@ input {
   padding: 8px;
   margin-bottom: 10px;
   box-sizing: border-box;
-}
-
-button {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
 }
 
 </style>

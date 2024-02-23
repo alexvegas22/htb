@@ -1,25 +1,19 @@
 <!-- sock-chat.vue -->
 <template>
 <div class="chatbox rounded-container">
-  <div class='header'>
-    <h1 class="titlex">{{chat.room}}</h1>
-    
-  </div>
   <div class="response">
     
-    <div v-for="msg in messages"
-	 :key="msg.username"
-	 :class="{
-        'event': msg.event !== 'message',
-        'message-sent': msg.event === 'message' && msg.username === name,
-        'message-received': msg.event === 'message' && msg.username !== name
-     }">
+    <div v-for="msg in messages">
       
-      <div v-if="msg.event=='message'" >
-	<div class="username">{{msg.username}}</div>
-	 <div  class="chat-bubble"> {{ msg.text }} </div>
+      <div v-if="msg.event==='message' || msg.event==='command'" >
+	<span v-if="msg.username==name">[</span>{{msg.username}}#{{msg.room}}<span v-if="msg.username==name">]</span> <span v-if="msg.username!=name">: </span>{{ msg.text }}
       </div>
-      
+      <div v-if="msg.event==='output'" class='output' >
+	 {{ msg.text }}
+      </div>
+      <div v-if="msg.event==='private'" class="privateMessage">
+	[Private Message] {{msg.username}} : {{msg.text}}
+      </div>
       <div v-if="msg.event=='join'" class="event">
 	{{msg.username}} joined the room
       </div>
@@ -27,24 +21,24 @@
        <div v-if="msg.event=='leave'" >
 	{{msg.username}} left the room
        </div>
-       
+      
     </div>
   </div>
   <div class="prompt">
-     <input v-model="message" placeholder="Type a message" />
-    <button @click="sendMessage">Send Message</button>
-</div>
+     <span>>>> </span><input v-model="message" placeholder="Type a message" @keydown.enter="sendMessage"/>
+  </div>
 </div>
 
 </template>
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 const message = ref('');
 const messages = ref([]);
 let socket = null;
 const props = defineProps({
     chat: Object
 })
+const emit = defineEmits(['inFocus', 'submit'])
 const name = ref(props.chat.name)
 const room=ref(props.chat.room)
 const initWebSocket = () => {
@@ -55,7 +49,6 @@ const initWebSocket = () => {
         socket.send(JSON.stringify({ event: 'set-name', username : name.value ,room : room.value}));
        if (socket.readyState === WebSocket.OPEN) {
 	   socket.send(JSON.stringify({event: 'join', username: name.value, room: room.value }));
-	   //messages.value.push({ event : 'join', username: name.value });
        } else {
 	   socket.send(JSON.stringify({event: 'leave', username: name.value, room: room.value }));
        }
@@ -66,7 +59,7 @@ const initWebSocket = () => {
     socket.addEventListener('message', (event) => {
 	const data = JSON.parse(event.data);
 	    messages.value.push({ event : data.event, username: data.username, text: data.text, room: data.room });
-	    
+	
   });
 
     socket.addEventListener('close', () => {
@@ -76,8 +69,16 @@ const initWebSocket = () => {
 }; 
 
 const sendMessage = () => {
-  if (socket.readyState === WebSocket.OPEN) {
-    socket.send(JSON.stringify({event: 'message', username:name.value,  text: message.value, room: room.value }));
+    if (socket.readyState === WebSocket.OPEN) {
+	if (message.value==='/leave'){
+	    emit('leave')
+	}
+	if (message.value[0]=='/'){
+	    socket.send(JSON.stringify({event: 'command', username:name.value,  text: message.value, room: room.value }));
+	    
+	}
+	else{socket.send(JSON.stringify({event: 'message', username:name.value,  text: message.value, room: room.value }));}
+    
     message.value = '';
   }
 };
@@ -85,6 +86,11 @@ const sendMessage = () => {
 onMounted(() => {
   initWebSocket();
 });
+onUnmounted(() => {
+      if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.close();
+      }
+    });
 </script>
 
 
@@ -109,7 +115,6 @@ onMounted(() => {
     flex-direction: column;
     justify-content: space-between;
     align-content: stretch;
-    width: 100%;
 }
 .title{
     align-self: flex-start;
@@ -121,10 +126,10 @@ onMounted(() => {
     justify-content: space-between;
 }
 .event{
-    color : red;
-    text-align : center;
-    align-self: center;
-    
+    color : red;    
+}
+.output{
+    color: gray;
 }
 
 .response{
@@ -135,7 +140,6 @@ onMounted(() => {
     flex-direction : column;
     align-items: flex-start;
     overflow-y:auto;
-    background : #e9e8f1;
     padding : 5px;
     height : 100%;
     width : 100%;
@@ -145,62 +149,20 @@ onMounted(() => {
     flex-direction : row;
     align-self: center;
     width : 100%;
-    background-color: whitesmoke;
     align-items: stretch;
-    justify-content : space-between;
-		     
 }
 .prompt:last-child{
     align-self: flex-end;
     justify-self: flex-end;
 }
 
-button, input {
-	padding: 5px;
-	font: inherit;
-	
-	
-}
 input{
-    color:black;
-    width: 70%;
+
+    border : none;
 }
 
 button {
     cursor: pointer;
     bakcground: green;
 }
-
-.username {
-    padding-left : 5px;
-    padding-right: 5px;
-}
-.chat-bubble{
-     border-radius: 5px;
-    background :#c9c6dd;
-    padding : 3px 7px 5px 7px;
-    height : fit-content;
-    width: fit-content;
-    margin : 3px;
-}
-
-.message-sent{
-    text-align: right;
-   
-    align-self:flex-end;
-    margin-left : 15px;
- }
-
-.message-received{
-    
-    text-align: left;
-    justify-self:flex-start;
-    margin-right : 15px;
-}
-
-.message-typing{
-    text-align:center;
-   justify-content:flex-start;
-}
-
 </style>

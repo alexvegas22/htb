@@ -27,7 +27,7 @@ watchEffect(() => {
     <div class="feed">
       <Posts v-for="item in posts" :key="item.id" :post="item" />
     </div>
-    <Boards />
+ 
   </div>
 </template>
 

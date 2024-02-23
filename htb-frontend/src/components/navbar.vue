@@ -1,10 +1,11 @@
 <template>
   <nav class="nav rounded-container">
     <div class="navbar-brand">
-      <router-link to="/" class="navbar-item" href="#">
-        <!-- Your logo or brand text goes here -->
-       HTB
+
+      <h2><router-link to="/" class="navbar-item" href="#">
+	HTB
       </router-link>
+      </h2>
     </div>
 
     <div class="navbar-menu">
@@ -32,15 +33,14 @@ export default {
 
 .navbar-brand {
     font-size: 1.5rem;
-    color : black;
 }
 
 .navbar-item {
-  color: black;
+    color : var(--text);
   margin-right: 1rem;
 }
 
 .navbar-item:hover {
-    color : gray;
+    background : var(--secondary)
 }
 </style>
