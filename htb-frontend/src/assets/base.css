@@ -58,14 +58,16 @@ small {font-size: 0.750rem; /* 12px */}
 
 
 body {
-  min-height: 100vh;
-  color: var(--text);
-  background:var(--background);
-  transition:
-    color 0.5s,
-    background-color 0.5s;
-  line-height: 1.6;
-  margin : auto;
+    caret-color: var(--text);
+    caret-shape : block;
+    min-height: 100vh;
+    color: var(--text);
+    background:var(--background);
+    transition:
+	color 0.5s,
+	background-color 0.5s;
+    line-height: 1.6;
+    margin : auto;
 }
 
 .rounded-container{
@@ -91,17 +93,19 @@ button{
     cursor: pointer;
 }
 
-button:hover{
+button:hover,
+a:hover,
+button:focus,
+a:focus,
+input:focus{
     background : var(--secondary);
+    outline : none;
 }
 
 a{
     color: var(--primary);
 }
 
-a:hover{
-    background : var(--secondary);
-}
 
 input {
     border: none;
@@ -110,5 +114,6 @@ input {
     outline: none;
     box-shadow: none;
     background-color: transparent;
-    /* Add any other styles as needed */
+    caret: blue block;
+
 }

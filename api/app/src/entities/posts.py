@@ -1,16 +1,18 @@
+import uuid
+from datetime import datetime
 class Post:
-    def __init__(self, id, title, img, user, content):
-        self.id = id
+    def __init__(self, title, image, content):
+        self.id = str(uuid.uuid4())
         self.title = title
-        self.img = img
-        self.user = user
+        self.image = image
         self.content = content
+        self.date = Date.now()
 
     def to_dict(self):
         return {
             'id': self.id,
             'title': self.title,
-            'img': self.img,
-            'user': self.user,
-            'content': self.content
+            'image': self.image,
+            'content': self.content,
+            'date' : self.date
         }

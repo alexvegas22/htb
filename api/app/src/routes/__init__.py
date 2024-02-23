@@ -1,8 +1,9 @@
 #/src/routes
 from flask import Blueprint
 
-# Create a blueprint for post-related routes
 post_routes = Blueprint('post_routes', __name__)
 
-# Import the routes from post_routes.py
-from app.routes.post_routes import *
+image_routes = Blueprint('images_routes', __name__)
+
+from app.src.routes.post_routes import *
+from app.src.routes.images_routes import *

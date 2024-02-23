@@ -4,6 +4,7 @@ const wss = new WebSocketServer({ port: 8080 });
 
 let messageId = 1; // Counter for generating unique message IDs
 const messages = [];
+const rooms = new Map();
 const clients = new Map();
 
 wss.on('connection', function connection(ws, client) {
@@ -24,19 +25,62 @@ wss.on('connection', function connection(ws, client) {
 	    const metadata = {username, room}
 	    clients.set(ws, metadata);
 	}
+	if ( event=='command'){
+	    ws.send(JSON.stringify({event:event,username:username,text:text,room:room}))
+	    const commandArray = text.split(' ');
+	    switch  (commandArray[0]){
+	    case '/help' :
+		const helpMessage = [
+		    "-> Available commands:",
+		    "/msg [username] [message] : send a private message to a user",
+		    "/users : list all active users in the room",
+		    "/leave : leave the room"]
+		helpMessage.forEach(help=>
+		    ws.send(JSON.stringify({event:'output',username:username,text:help,room:room})));
+		break;
+	    case '/msg' :
+		if (commandArray[1]){
+		    const client = Array.from(clients.entries())
+			  .filter(([client, metadata]) => metadata.username === commandArray[1])
+			  .map(([client]) => client);
+		    if (client[0]){
+			if(commandArray[2]){
+			    const filteredMessage = commandArray.splice(2).join(' ');
+			    client[0].send(JSON.stringify({event: 'private', username: username, text: filteredMessage, room: room}));
+			} else {
+			    ws.send(JSON.stringify({event:'output',username:username,text:'No message has been provided',room:room}));
+			}
+		    } else {
+			ws.send(JSON.stringify({event:'output',username:username,text:`User ${commandArray[1]} does not exist`,room:room}));
+		    }
+		}else {
+		    ws.send(JSON.stringify({event:'output',username:username,text:'No username has been provided',room:room}));
+	        }
+	        break;
+	    case '/users' :
+		ws.send(JSON.stringify({ event: 'output', text: 'Users :', room: room }));
+		const clientsInRoom = Array.from(clients.entries())
+		      .filter(([client, metadata]) => metadata.room === room)
+		      .map(([client, metadata]) => {
+			  ws.send(JSON.stringify({ event: 'output', username:'server', text: metadata.username, room: room }));	
+		      });
+		break;
+	    default :
+		ws.send(JSON.stringify({ event: 'output', username:'server', text:`'${commandArray[0]}' is not a valid command`, room: room }));
+	    }
+	}
+	else{
+	    messages.push({ event, username, text, room});
+	    broadcast({event, username, text, room});
+	}
 	console.log(`Received message ${data} from user ${username}`);
-
-	// Push a new message object to the messages array
-	messages.push({ event, username, text, room});
 	
-	// Broadcast the new message to all connected clients
-	broadcast({event, username, text, room});
     });
     
     ws.on('close', () => {
 	const clientMetadata = clients.get(ws);
-        const username = clientMetadata ? clientMetadata.username : 'Unknown';
-
+	const username = clientMetadata ? clientMetadata.username : 'Unknown';
+	
 	broadcast({event : 'leave', username: username, room: clientMetadata.room});
 	clients.delete(ws);
     });
@@ -44,11 +88,9 @@ wss.on('connection', function connection(ws, client) {
 
 
 function broadcast(message) {
-
     const clientsInRoom = Array.from(clients.entries())
         .filter(([client, metadata]) => metadata.room === message.room)
         .map(([client]) => client);
-
     for (const client of clientsInRoom) {
         client.send(JSON.stringify(message));
     }

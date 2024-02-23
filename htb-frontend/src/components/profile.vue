@@ -1,8 +1,6 @@
 <template>
   <div class="rounded-container profile-container">
-    <h3>Profile Section</h3>
-    
-  <CreatePost />
+    <CreatePost />
   </div>
 </template>
 

@@ -102,6 +102,7 @@ function processCommand(){
     }
     command.value = ''
 }
+onMounted(()=> joined.value=false )
 </script>
 
 <template>
@@ -113,19 +114,12 @@ function processCommand(){
       <div v-for="command in log">
 	{{command}}
       </div>
-     <span v-if="!chat.name"> >>></span> <span v-if="chat.name">[{{chat.name}}]$ </span>  <input v-model="command" @keydown.enter="processCommand" />
+     <span v-if="!chat.name"> >>> </span><span v-if="chat.name">[{{chat.name}}]$ </span>  <input v-model="command" @keydown.enter="processCommand" />
    </div>
   </div>
   
-
-  <div class="rounded-container"  v-if="joined">
-    <h2>{{chat.room}}</h2>
-   <h3>Logged in as {{chat.name}} </h3>
-    
-    <button @click.prevent="leave">Leave Room</button>
-  </div>
   
-<ChatSock v-if="joined" :chat="chat"/>
+<ChatSock v-if="joined" :chat="chat" @leave="leave"/>
 </div>
 
 </template>

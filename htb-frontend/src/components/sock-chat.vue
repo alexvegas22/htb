@@ -1,23 +1,19 @@
 <!-- sock-chat.vue -->
 <template>
 <div class="chatbox rounded-container">
-  <div class='header'>
-    <h2 class="titlex">{{chat.room}}</h2>
-    
-  </div>
   <div class="response">
     
-    <div v-for="msg in messages"
-	 :key="msg.username"
-	 :class="{
-        'event': msg.event !== 'message',
-        'message': msg.event === 'message'
-     }">
+    <div v-for="msg in messages">
       
-      <div v-if="msg.event=='message'" >
-	 <div  class="chat-bubble">[{{msg.username}}]$ {{ msg.text }} </div>
+      <div v-if="msg.event==='message' || msg.event==='command'" >
+	<span v-if="msg.username==name">[</span>{{msg.username}}#{{msg.room}}<span v-if="msg.username==name">]</span> <span v-if="msg.username!=name">: </span>{{ msg.text }}
       </div>
-      
+      <div v-if="msg.event==='output'" class='output' >
+	 {{ msg.text }}
+      </div>
+      <div v-if="msg.event==='private'" class="privateMessage">
+	[Private Message] {{msg.username}} : {{msg.text}}
+      </div>
       <div v-if="msg.event=='join'" class="event">
 	{{msg.username}} joined the room
       </div>
@@ -25,23 +21,24 @@
        <div v-if="msg.event=='leave'" >
 	{{msg.username}} left the room
        </div>
-       
+      
     </div>
   </div>
   <div class="prompt">
-     <span>>>></span><input v-model="message" placeholder="Type a message" @keydown.enter="sendMessage"/>
-</div>
+     <span>>>> </span><input v-model="message" placeholder="Type a message" @keydown.enter="sendMessage"/>
+  </div>
 </div>
 
 </template>
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 const message = ref('');
 const messages = ref([]);
 let socket = null;
 const props = defineProps({
     chat: Object
 })
+const emit = defineEmits(['inFocus', 'submit'])
 const name = ref(props.chat.name)
 const room=ref(props.chat.room)
 const initWebSocket = () => {
@@ -52,7 +49,6 @@ const initWebSocket = () => {
         socket.send(JSON.stringify({ event: 'set-name', username : name.value ,room : room.value}));
        if (socket.readyState === WebSocket.OPEN) {
 	   socket.send(JSON.stringify({event: 'join', username: name.value, room: room.value }));
-	   //messages.value.push({ event : 'join', username: name.value });
        } else {
 	   socket.send(JSON.stringify({event: 'leave', username: name.value, room: room.value }));
        }
@@ -63,7 +59,7 @@ const initWebSocket = () => {
     socket.addEventListener('message', (event) => {
 	const data = JSON.parse(event.data);
 	    messages.value.push({ event : data.event, username: data.username, text: data.text, room: data.room });
-	    
+	
   });
 
     socket.addEventListener('close', () => {
@@ -73,8 +69,16 @@ const initWebSocket = () => {
 }; 
 
 const sendMessage = () => {
-  if (socket.readyState === WebSocket.OPEN) {
-    socket.send(JSON.stringify({event: 'message', username:name.value,  text: message.value, room: room.value }));
+    if (socket.readyState === WebSocket.OPEN) {
+	if (message.value==='/leave'){
+	    emit('leave')
+	}
+	if (message.value[0]=='/'){
+	    socket.send(JSON.stringify({event: 'command', username:name.value,  text: message.value, room: room.value }));
+	    
+	}
+	else{socket.send(JSON.stringify({event: 'message', username:name.value,  text: message.value, room: room.value }));}
+    
     message.value = '';
   }
 };
@@ -82,6 +86,11 @@ const sendMessage = () => {
 onMounted(() => {
   initWebSocket();
 });
+onUnmounted(() => {
+      if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.close();
+      }
+    });
 </script>
 
 
@@ -117,9 +126,10 @@ onMounted(() => {
     justify-content: space-between;
 }
 .event{
-    color : red;
-
-    
+    color : red;    
+}
+.output{
+    color: gray;
 }
 
 .response{
@@ -139,7 +149,7 @@ onMounted(() => {
     flex-direction : row;
     align-self: center;
     width : 100%;
-    align-items: stretch;		     
+    align-items: stretch;
 }
 .prompt:last-child{
     align-self: flex-end;

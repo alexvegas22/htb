@@ -5,10 +5,11 @@
 	<a v-bind:href="post.img" class="image-link">{{post.img}}</a>
       </div>
       <div class="post-info">
-	<h3>{{post.title}} -{{post.id}}- SEP 22 2002</h3>
+	<h3>{{post.title}} </h3>
 	<div class="post-content">
       <p>{{post.content}}</p>
-      </div>
+	</div>
+	{{post.date}} - {{post.id}}
       </div>
   </div>
 </template>
