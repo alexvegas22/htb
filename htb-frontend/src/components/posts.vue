@@ -1,8 +1,8 @@
 <template>
   <div class="post rounded-container">
       <div class="post-image">
-	<img v-bind:src="post.img" />
-	<a v-bind:href="post.img" class="image-link">{{post.img}}</a>
+	<img v-bind:src="'http://localhost:5000/general/'+post.image" />
+	<router-link :to="{ name: 'image', params: { imageName: post.image }}" class="image-link">{{post.image}}</router-link>
       </div>
       <div class="post-info">
 	<h3>{{post.title}} </h3>
@@ -16,7 +16,8 @@
 <script>
 export default {
     props: {
-	post: Object
+	post: Object,
+	board : String
     }
 };
 </script>

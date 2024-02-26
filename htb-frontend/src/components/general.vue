@@ -9,7 +9,7 @@ const posts = ref([]);
 
 const fetchData = async () => {
   try {
-    const response = await fetch('http://localhost:5000/posts');
+    const response = await fetch('http://localhost:5000/general/posts');
     posts.value = await response.json();
   } catch (error) {
     console.error('Error fetching posts:', error);

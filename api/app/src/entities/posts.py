@@ -1,12 +1,13 @@
-import uuid
 from datetime import datetime
+from app.src.dao.post_dao import get_new_board_index
+
 class Post:
-    def __init__(self, title, image, content):
-        self.id = str(uuid.uuid4())
+    def __init__(self, title, image, content,board):
+        self.id = get_new_board_index(board)
         self.title = title
         self.image = image
         self.content = content
-        self.date = Date.now()
+        self.date = datetime.now().timestamp()
 
     def to_dict(self):
         return {
@@ -16,3 +17,4 @@ class Post:
             'content': self.content,
             'date' : self.date
         }
+ 

@@ -8,9 +8,10 @@ upload_folder = os.path.join(app.root_path, 'static', 'uploads')
 
 images_routes = Blueprint('images_routes', __name__)
 
-@app.route('/images/<filename>')
-def get_image(filename):
-    return send_from_directory(upload_folder, filename)
+@app.route('/<board>/<filename>')
+def get_image(board,filename):
+    file_path = board+'/'+filename
+    return send_from_directory(upload_folder, file_path)
 
 @images_routes.route('/images')
 def list_images():

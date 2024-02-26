@@ -1,31 +1,39 @@
-from flask import jsonify, request, url_for, flash
+from flask import jsonify, request
 from werkzeug.utils import secure_filename
 import os
-from app.src.dao.post_dao import get_posts, add_post
+from datetime import datetime
+from app.src.dao.post_dao import *
 from app.src.entities.posts import Post
 
-def get_or_add_posts(request):
+def get_or_add_posts(request, board):
     if request.method == 'GET':
-        return get_posts()
+        return get_board_posts(board)
     elif request.method == 'POST':
-        new_post_data = request.get_json()
+        new_post_data = request.form.to_dict()  # Get form data as a dictionary
+        new_post_data['board'] = board
 
         if 'image' in request.files:
             image_file = request.files['image']
             print(f'Received image file: {image_file.filename}')
+
+            _, file_extension = os.path.splitext(image_file.filename)
+
+            # Generate a unique filename based on the current timestamp and file extension
+            image_filename = f'{datetime.now().timestamp()}{file_extension}'
+            image_path = os.path.join('app/static/uploads', board, image_filename)
             
-            image_filename = secure_filename(image_file.filename)
-            image_path = os.path.join('app/static/uploads', image_filename)
+            new_post_data['image'] = str(image_filename)
 
             try:
                 image_file.save(image_path)
-                new_post_data['image'] = url_for('static', filename=f'uploads/{Date.now}')
-                flash('Image uploaded successfully!', 'success')
+                new_post = Post(**new_post_data)
+                return add_post(new_post, board), 201
             except Exception as e:
-                flash(f'Error uploading image: {str(e)}', 'error')
                 print(f'Error uploading image: {str(e)}')
 
-        new_post = Post(**new_post_data)
-        return add_post(new_post), 201
+        else :
+            return 'Missing image file', 401
+                
     else:
         return 'Method not allowed', 405
+ 

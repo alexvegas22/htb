@@ -6,31 +6,37 @@ const title = ref('');
 const image = ref(null);
 const content = ref('');
 const isHidden = ref(true);
-const postUrl = ref('http://localhost:5000/posts');
+const postUrl = ref('http://localhost:5000/general/posts');
+const selectedFile = ref(null)
 
 
 const handleFileChange = () => {
-  const selectedFile = image.value.files[0];
+  selectedFile.value = image.value.files[0];
   console.log('Selected File:', selectedFile);
 };
 
 const createPost = async () => {
     if (title.value && image.value && content.value){
-    try {
-        const postData = {
-            title: title.value,
-            image: image.value,
-            content: content.value
-        };
-        const response = await axios.post(postUrl.value, postData);
-        console.log('Response:', response.data); 
-    } catch (error) {
-        console.error('Error:', error.message);
-    }
-	isHidden.value = true;
-	title.value = ""
-	image.value = ""
-	content.value = ""
+        try {
+            const formData = new FormData();
+            formData.append('title', title.value);
+            formData.append('image', selectedFile.value);
+            formData.append('content', content.value);
+
+            const response = await axios.post(postUrl.value, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
+            console.log('Response:', response.data); 
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+        isHidden.value = true;
+        title.value = "";
+        image.value = null;
+        content.value = "";
     }
 };
 
