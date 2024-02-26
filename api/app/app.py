@@ -11,4 +11,7 @@ from app.src.routes.images_routes import images_routes
 CORS(app,resources={"/*":{"origins":"*"}})
 app.register_blueprint(post_routes)
 app.register_blueprint(images_routes)
- 
+
+@app.route('/')
+def index():
+    return 'Index Page' 
