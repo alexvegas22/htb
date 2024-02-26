@@ -6,7 +6,7 @@ const title = ref('');
 const image = ref(null);
 const content = ref('');
 const isHidden = ref(true);
-const postUrl = ref('http://localhost:5000/posts');
+const postUrl = ref('http://localhost:5000/general/posts');
 
 
 const handleFileChange = () => {
