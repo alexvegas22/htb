@@ -3,16 +3,23 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 
 import General from './components/general.vue';
 import Sock from './components/sock.vue';
+import Image from './components/image.vue';
 
 const routes = [
-  {
-    path: '/',
-    component: General,
-  },
-  {
-    path: '/sock',
-    component: Sock,
-  },
+    {
+	path: '/',
+	component: General,
+    },
+    {
+	name: 'sock',
+	path: '/sock',
+	component: Sock,
+    },
+    {
+	name : 'image',
+	path: '/image/:imageName',
+	component: Image,
+    },
 ];
 
 const router = createRouter({
