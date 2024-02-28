@@ -13,7 +13,7 @@ on the front end, as well as cleaning up the API.
 
 *How do i run it?*
 
-HTB relies on 3 different apps : A vue.js frontend, a Flask API and a NodeJS websocket server.
+HTB relies on 3 different apps : A vue.js frontend, a Flask API connected to Redis and a NodeJS websocket server.
 
 To run the entire application, execute the [[file:./deploy.sh][deploy]] script 
 #+BEGIN_SRC BASH
@@ -32,6 +32,7 @@ python -m venv .venv
 pip install -r api/requirements.txt
 cd api/
 flask run &
+redis-server &
 #+END_SRC
 For the chatting websocket server :
 #+BEGIN_SRC BASH
