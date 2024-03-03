@@ -32,7 +32,7 @@ watchEffect(() => {
 <template>
   <div class="home-container">
     <div class="feed">
-      <Posts v-for="item in posts" :key="item.id" :post="item" />
+      <Posts v-for="item in posts" :key="item.id" :post="item" :board="board"/>
     </div>
 <div>
   <CreatePost :board="board"/>

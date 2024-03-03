@@ -48,7 +48,7 @@ const initWebSocket = () => {
 
   socket.addEventListener('open', () => {
       console.log('WebSocket connected');
-        socket.send(JSON.stringify({ event: 'set-name', username : name.value ,room : room.value}));
+        socket.send(JSON.stringify({ event: 'set-name', username : name.value, room : room.value}));
        if (socket.readyState === WebSocket.OPEN) {
 	   socket.send(JSON.stringify({event: 'join', username: name.value, room: room.value }));
        } else {

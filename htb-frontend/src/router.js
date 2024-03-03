@@ -17,7 +17,7 @@ const routes = [
     },
     {
 	name : 'image',
-	path: '/image/:imageName',
+	path: '/image/:boardName/:imageName',
 	component: Image,
     },
 ];

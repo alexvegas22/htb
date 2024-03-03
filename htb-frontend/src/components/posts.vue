@@ -1,26 +1,33 @@
+<script setup>
+import { ref, computed } from 'vue';
+
+// Destructure props
+const { post, board } = defineProps(['post', 'board']);
+
+</script>
+
 <template>
   <div class="post rounded-container">
-      <div class="post-image">
-	<img v-bind:src="'http://localhost:5000/general/'+post.image" />
-	<router-link :to="{ name: 'image', params: { imageName: post.image }}" class="image-link">{{post.image}}</router-link>
+    <div class="post-image">
+      <img :src="`http://localhost:5000/${board}/${post.image}`" />
+      <router-link :to="{ name: 'image', params: { imageName: post.image , boardName: board}}" class="image-link">
+        {{ post.image }}
+      </router-link>
+    </div>
+    <div class="post-info">
+      <div>
+      <h3 v-if="post.title">{{ post.title }}</h3>
+      <div class="post-content" v-if="post.content">
+        <p>{{ post.content }}</p>
       </div>
-      <div class="post-info">
-	<h3>{{post.title}} </h3>
-	<div class="post-content">
-      <p>{{post.content}}</p>
-	</div>
-	{{post.date}} - {{post.id}}
+      </div>
+      <div class="post-id">
+            #{{ post.id }}
+    </div>
       </div>
   </div>
 </template>
-<script>
-export default {
-    props: {
-	post: Object,
-	board : String
-    }
-};
-</script>
+
 <style scoped>
 .post{
     display : flex;
@@ -50,6 +57,13 @@ overflow: hidden;
 }
 .post-info{
     width : 70%;
+    display : flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+}
+.post-id{
+    align-self:flex-end;
 }
 .post-content{
     margin-left: 15px;
