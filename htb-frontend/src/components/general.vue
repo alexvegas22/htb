@@ -9,10 +9,11 @@ const posts = ref([]);
 const board = ref('general')
 
 const apiUrl = import.meta.env.VITE_API_URL
+const apiPort = import.meta.env.VITE_API_PORT
 
 const fetchData = async () => {
   try {
-    const response = await fetch(`http://${apiUrl}:5000/${board.value}/posts`);
+    const response = await fetch(`${apiUrl}:${apiPort}/${board.value}/posts`);
     posts.value = await response.json();
   } catch (error) {
     console.error('Error fetching posts:', error);
