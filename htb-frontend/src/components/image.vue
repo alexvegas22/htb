@@ -1,7 +1,10 @@
 <script setup>
+  const apiUrl = import.meta.env.VITE_API_URL
+  const apiPort = import.meta.env.VITE_API_PORT
+  const url = `${apiUrl}:${apiPort}`
 </script>
 <template>
-  <img :src="'http://localhost:5000/'+$route.params.boardName+'/'+$route.params.imageName" />
+  <img :src="'$url/'+$route.params.boardName+'/'+$route.params.imageName" />
  {{$route.params.imageName}}
 </template>
 <style scoped>
