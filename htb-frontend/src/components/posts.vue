@@ -10,17 +10,21 @@ const { post, board } = defineProps(['post', 'board']);
   <div class="post rounded-container">
     <div class="post-image">
       <img :src="`http://localhost:5000/${board}/${post.image}`" />
-      <router-link :to="{ name: 'image', params: { imageName: post.image }}" class="image-link">
+      <router-link :to="{ name: 'image', params: { imageName: post.image , boardName: board}}" class="image-link">
         {{ post.image }}
       </router-link>
     </div>
     <div class="post-info">
+      <div>
       <h3 v-if="post.title">{{ post.title }}</h3>
       <div class="post-content" v-if="post.content">
         <p>{{ post.content }}</p>
       </div>
-      {{ post.date }} - {{ post.id }}
+      </div>
+      <div class="post-id">
+            #{{ post.id }}
     </div>
+      </div>
   </div>
 </template>
 
@@ -55,10 +59,11 @@ overflow: hidden;
     width : 70%;
     display : flex;
     flex-direction: column;
+    justify-content: space-between;
     
 }
-.post-info:last-child{
-    jusitfy-self:flex-end;
+.post-id{
+    align-self:flex-end;
 }
 .post-content{
     margin-left: 15px;
