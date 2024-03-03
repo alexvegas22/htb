@@ -1,16 +1,18 @@
 <template>
   <div class="rounded-container boards">
     <h3>Boards</h3>
-    <a @click="$emit('switchboard','general')" selected="selected">General</a>
-    <a @click="$emit('switchboard','animals')" >Animals</a>
-    <a @click="$emit('switchboard','art')">Art</a>
+    <button  @click="$emit('switchboard','general')" selected="selected" :class="{selected:board==='general'}">General</button>
+    <button @click="$emit('switchboard','animals')" :class="{selected:board==='animals'}">Animals</button>
+    <button @click="$emit('switchboard','art')" :class="{selected:board==='art'}">Art</button>
   </div>
 </template>
 
 <script>
 export default {
     name : 'Board',
-
+    props: {
+	board: String,
+    }
 }
 </script>
 <style scoped>
@@ -19,8 +21,11 @@ export default {
 	flex-direction : column;
 	margin-bottom:15px;
     }
-    a{
-    color:var(--text)}
+    button{
+	border : none;
+	border-radius: 0;
+	font-size:1.2rem;
+	}
     .selected{
 	text-decoration: underline;
     }

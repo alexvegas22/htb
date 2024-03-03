@@ -26,7 +26,7 @@ const createPost = async () => {
             formData.append('title', title.value);
             formData.append('image', selectedFile.value);
             formData.append('content', content.value);
-	    let url = `${postUrl}${props.board}/posts`;
+	    let url = `${postUrl.value}${props.board}/posts`;
             const response = await axios.post(url, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
