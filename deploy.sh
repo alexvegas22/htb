@@ -7,7 +7,6 @@ python -m venv .venv
 pip install -r api/requirements.txt
 cd api/
 flask run &
-redis-server &
 
 cd ..
 cd websocket/
