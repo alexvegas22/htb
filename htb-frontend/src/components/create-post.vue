@@ -2,11 +2,14 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
+const props = defineProps(['board'])
+
 const title = ref('');
 const image = ref(null);
 const content = ref('');
 const isHidden = ref(true);
-const postUrl = ref('http://localhost:5000/general/posts');
+const apiUrl = import.meta.env.VITE_API_URL
+const postUrl = ref(`http://${apiUrl}:5000/${props.board}/posts`);
 const selectedFile = ref(null)
 
 
@@ -46,7 +49,7 @@ function hideForm() {
 </script>
 
 <template>
-  <div>
+  <div class="rounded-container">
     <button @click="hideForm" :class="{ hidden: !isHidden }" >Create a new post</button>
     <form :class="{ hidden: isHidden }" class="post-form">
       <label for="title">Title :</label><br>
@@ -57,18 +60,15 @@ function hideForm() {
 
       <label for="content"> Text :</label><br>
       <input v-model="content"><br>
-
-
-
       
-      <button @click.prevent="createPost">Submit</button>
+      <button @click.prevent="createPost">Post to {{props.board}}</button>
     </form>
   </div>
 </template>
 
 <script>
   export default {
-  name: 'Create-post',
+  name: 'CreatePost',
   };
 
 </script>

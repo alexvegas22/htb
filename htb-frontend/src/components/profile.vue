@@ -2,11 +2,6 @@
   <div class="rounded-container profile-container">
     <CreatePost :board="board" />
 
-    <select v-model="selected">
-      <option @click="$emit('switchboard','general')">General</option>
-      <option @click="$emit('switchboard','animals')" >Animals</option>
-      <option @click="$emit('switchboard','art')">Art</option>
-    </select>
   </div>
     
 </template>
@@ -26,6 +21,7 @@ export default {
     .profile-container{
 	display : flex;
 	flex-direction : column;
+	justify-content:space-between;
     }
 </style>
 
