@@ -1,5 +1,9 @@
 #!/bin/bash
 
+cp .env htb-frontend/.env
+cp .env api/.env
+cp .env websocket/.env
+
 redis-server &
 
 python -m venv .venv

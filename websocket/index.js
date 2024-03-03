@@ -1,6 +1,6 @@
 import { WebSocketServer } from 'ws';
 
-const wss = new WebSocketServer({ port: 8080 });
+const wss = new WebSocketServer({ port: 8880 });
 
 let messageId = 1; // Counter for generating unique message IDs
 const messages = [];
