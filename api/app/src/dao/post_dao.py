@@ -14,11 +14,11 @@ from app.src.entities.posts import Post
 def get_board_posts(board):
     posts_from_redis = redis.lrange(board, 0, -1)
     posts_list = [json.loads(post.decode()) for post in posts_from_redis]
-    return jsonify(posts_list)
+    return jsonify(posts_list[::-1])
 
 def add_post(new_post,board):
     post_dict = new_post.to_dict()
-    json_data = json.dumps(post_dict)  # Serialize the dictionary to a JSON string
+    json_data = json.dumps(post_dict)
     redis.rpush(board, json_data)
     return jsonify(post_dict)
 
