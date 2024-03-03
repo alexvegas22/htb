@@ -74,4 +74,11 @@ export default {
   transform: translate3d(0, 0, 0);
   transition:  0.05s;
 }
+@media (max-width: 768px) {
+    .mouse-circle {
+	background: none;
+	border:none;
+    }
+}
+
 </style>

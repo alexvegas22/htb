@@ -26,10 +26,7 @@ export default {
 
 <style scoped>
 /* Your navbar styles go here */
-.nav{
-    grid-area : nav;
-    height : fit-content;
-}
+
 
 .navbar-brand {
     font-size: 1.5rem;

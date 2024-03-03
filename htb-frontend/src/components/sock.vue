@@ -128,7 +128,6 @@ onMounted(()=> joined.value=false )
 
 <script>
 
-
 export default {
     name : 'Sock',
     components : {
