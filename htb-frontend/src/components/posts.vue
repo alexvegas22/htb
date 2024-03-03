@@ -15,10 +15,11 @@ const { post, board } = defineProps(['post', 'board']);
       </router-link>
     </div>
     <div class="post-info">
-      <div>
+     <div>
       <h3 v-if="post.title">{{ post.title }}</h3>
       <div class="post-content" v-if="post.content">
         <p>{{ post.content }}</p>
+      
       </div>
       </div>
       <div class="post-id">
@@ -29,6 +30,7 @@ const { post, board } = defineProps(['post', 'board']);
 </template>
 
 <style scoped>
+
 .post{
     display : flex;
     flex-direction : row;
@@ -56,7 +58,7 @@ overflow: hidden;
 
 }
 .post-info{
-    width : 70%;
+    width : 100%;
     display : flex;
     flex-direction: column;
     justify-content: space-between;
@@ -70,5 +72,25 @@ overflow: hidden;
     padding : 15px;
     text-align: left;
     
+}
+  @media (max-width: 768px) {
+
+    img{
+	width:30vw;}
+    a{
+	width:30vw;
+    }
+    h3{
+	font-size:5vw;
+	padding: 0px;
+    }
+    .post-content{
+	padding :0;
+	margin:0;
+    }
+    .post-info{
+	padding-left:15px;}
+    .post-image{
+    width:auto;}
 }
 </style>

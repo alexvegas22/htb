@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Syne%20Mono:700|Syne%20Mono:400');
 
-
-
 @media (prefers-color-scheme: light) {
   :root {
     --text: #16091b;
@@ -20,9 +18,6 @@
     --accent: #be5591;
   }
 }
-
-
-
 
 body {
   font-family: 'Syne Mono';
@@ -103,9 +98,21 @@ input:focus{
 }
 
 a{
-    color: var(--primary);
+    color: var(--accent);
 }
 
+select{
+ width: 100%;
+        padding: 8px;
+        margin-bottom: 10px; /* Adjust the spacing if needed */
+        display: block; /* Display the select input on smaller screens */
+        
+        /* Styling with custom colors */
+        background-color: var(--primary);
+        color: var(--text);
+        border: 1px solid var(--text);
+        border-radius: 5px;
+}
 
 input {
     border: none;
@@ -116,4 +123,33 @@ input {
     background-color: transparent;
     caret: blue block;
 
+}
+.nav{
+    height : fit-content;
+}
+@media(max-width:768px){
+    .rounded-container{
+	border-radius: 0px;
+	border: none;
+	margin: 0;
+	box-shadow: none;
+    }
+    
+    h1{
+	font-size:2rem
+    }
+
+    p{
+	font-size:0.8rem
+    }
+
+    router-link{
+	font-size:1rem;
+    }
+    
+    nav{
+	background: var(--primary);
+	color:var(--secondary);
+	padding : 0;
+    }
 }

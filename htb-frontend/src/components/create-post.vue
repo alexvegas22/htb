@@ -12,7 +12,7 @@ const apiUrl = import.meta.env.VITE_API_URL
 const apiPort = import.meta.env.VITE_API_PORT
 const postUrl = ref(`${apiUrl}:${apiPort}/`);
 const selectedFile = ref(null)
-
+const emit = defineEmits(['update'])
 
 const handleFileChange = () => {
   selectedFile.value = image.value.files[0];
@@ -32,7 +32,7 @@ const createPost = async () => {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-
+	     emit('update')
             console.log('Response:', response.data); 
         } catch (error) {
             console.error('Error:', error.message);

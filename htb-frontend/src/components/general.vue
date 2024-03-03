@@ -20,8 +20,12 @@ const fetchData = async () => {
   }
 };
 
+function update() {
+    fetchData();
+}
 function switchBoard(newBoard){
     board.value = newBoard
+    fetchData();
 }
 
 watchEffect(() => {
@@ -30,15 +34,16 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div class="home-container">
+<div class="home-container">
+  <div class="sidebar">
+    
+  <Board :board="board"  @switchboard="switchBoard"/>
+  <CreatePost :board="board" @update="update"/>
+</div>
     <div class="feed">
       <Posts v-for="item in posts" :key="item.id" :post="item" :board="board"/>
     </div>
-<div>
-  <CreatePost :board="board"/>
-  
-   <Board :board="board"  @switchboard="switchBoard"/>
-</div>
+
   </div>
 </template>
 
@@ -59,6 +64,19 @@ export default {
   flex-direction: row;
   width: 100%;
   overflow-y: auto;
+}
+  @media (max-width: 768px) {
+    .home-container {
+        flex-direction: column;
+    }
+    .feed {
+  overflow-y: none;
+  width: 100%;
+    }
+    .sidebar{
+	display:flex;
+	flex-direction:row;
+    justify-content:space-between}
 }
 
 .feed {
