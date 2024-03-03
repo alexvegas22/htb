@@ -41,9 +41,10 @@ const props = defineProps({
 const emit = defineEmits(['inFocus', 'submit'])
 const name = ref(props.chat.name)
 const room=ref(props.chat.room)
-const websocket_url = process.env.WEBSOCKET_URL
+const websocket_url = import.meta.env.VITE_WEBSOCKET_URL;
+const websocket_port = import.meta.env.VITE_WEBSOCKET_PORT;
 const initWebSocket = () => {
-  socket = new WebSocket(`ws://${websocket_url}:8080`);
+    socket = new WebSocket(`${websocket_url}:${websocket_port}`);
 
   socket.addEventListener('open', () => {
       console.log('WebSocket connected');
