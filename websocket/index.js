@@ -1,6 +1,8 @@
 import { WebSocketServer } from 'ws';
-
-const wss = new WebSocketServer({ port: 8880 });
+import dotenv from 'dotenv';
+dotenv.config();
+const wsPort = process.env.WEBSOCKET_PORT;
+const wss = new WebSocketServer({ port: wsPort });
 
 let messageId = 1; // Counter for generating unique message IDs
 const messages = [];
