@@ -1,16 +1,18 @@
 <!-- general.vue -->
 <script setup>
 import { ref, watchEffect } from 'vue';
-import Profile from './profile.vue';
 import Posts from './posts.vue';
-import Boards from './boards.vue';
+import CreatePost from './create-post.vue'
+import Board from './boards.vue';
 
 const posts = ref([]);
 const board = ref('general')
 
+const apiUrl = import.meta.env.VITE_API_URL
+
 const fetchData = async () => {
   try {
-    const response = await fetch(`http://localhost:5000/${board.value}/posts`);
+    const response = await fetch(`http://${apiUrl}:5000/${board.value}/posts`);
     posts.value = await response.json();
   } catch (error) {
     console.error('Error fetching posts:', error);
@@ -26,20 +28,30 @@ watchEffect(() => {
 });
 </script>
 
-<template> 
-
-
+<template>
   <div class="home-container">
-    <Profile :board="board" @switchboard="switchBoard"/>
-  
-    
     <div class="feed">
       <Posts v-for="item in posts" :key="item.id" :post="item" />
     </div>
- 
+<div>
+  <CreatePost :board="board"/>
+  
+   <Board :board="board"  @switchboard="switchBoard"/>
+</div>
   </div>
 </template>
 
+<script>
+export default {
+    name : 'General',
+    components : {
+	CreatePost,
+	Board,
+	Posts
+    }
+}
+
+</script>
 <style scoped>
 .home-container {
   display: flex;
