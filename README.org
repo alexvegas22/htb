@@ -8,8 +8,7 @@ having to rely on social media apps.
 
 *Live Demo*
 
-There's no live demo as of now, still trying to implement features and polish the look
-on the front end, as well as cleaning up the API.
+[[http://v34l.com:5173]]
 
 *How do i run it?*
 
