@@ -1,15 +1,17 @@
 <script setup>
 import { ref, computed } from 'vue';
 
-// Destructure props
 const { post, board } = defineProps(['post', 'board']);
+  const apiUrl = import.meta.env.VITE_API_URL
+  const apiPort = import.meta.env.VITE_API_PORT
+  const url = `${apiUrl}:${apiPort}`
 
 </script>
 
 <template>
   <div class="post rounded-container">
     <div class="post-image">
-      <img :src="`http://localhost:5000/${board}/${post.image}`" />
+      <img :src="`${url}/${board}/${post.image}`" />
       <router-link :to="{ name: 'image', params: { imageName: post.image , boardName: board}}" class="image-link">
         {{ post.image }}
       </router-link>
