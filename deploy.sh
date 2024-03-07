@@ -18,5 +18,5 @@ node index.js &
 cd ..
 cd htb-frontend/
 npm install
-npm run dev &
+npm run dev -- --host &
 
