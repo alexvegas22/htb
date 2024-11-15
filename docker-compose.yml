@@ -1,28 +1,30 @@
 services:
   setup:
+    image: alpine
+    container_name: setup-container
     command:  >
-      sh -c "if [ -e ./.env ]; then
-      echo "File exists"
-      else
+      sh -c "if [ ! -e ./.env ]; then
       cp env-example .env
-      fi
-      cp env. htb-frontend/.env
-      cp .env api/.env
+      fi &&
+      cp .env htb-frontend/.env &&
+      cp .env api/.env &&
       cp .env websocket/.env"
       
   redis:
     container_name: htb-redis
     image: redis
     ports:
-      - "3033:3033"
+      - "6379:6379"
 
   front-end:
     container_name: htb-web
     image: node
     ports:
       - "8080:80"
+    volumes:
+      - ./htb-frontend:/htb-frontend 
     command: >
-      sh -c "cd htb-frontend &&
+      sh -c "cd /htb-frontend &&
              npm install &&
              npm run dev -- --host"
 
@@ -31,8 +33,10 @@ services:
     image: node
     ports:
       - "8990:8990"
+    volumes:
+      - ./websocket:/websocket
     command: >
-      sh -c "cd websocket &&
+      sh -c "cd /websocket &&
              npm install &&
              node index.js"
 
@@ -41,8 +45,10 @@ services:
     image: python
     ports:
       - "5000:5000"
+    volumes:
+      - ./api:/api
     command: >
-      sh -c "cd api &&
+      sh -c "cd /api &&
              python -m venv .venv &&
              . .venv/bin/activate &&
              pip install -r requirements.txt &&
