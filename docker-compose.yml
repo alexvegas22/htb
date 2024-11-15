@@ -1,0 +1,36 @@
+version: '3'
+services:
+  redis:
+    container_name: htb-redis
+    image: redis
+    ports:
+      - "6379:3033"
+  front-end:
+    container_name: htb-web
+    image: node
+    ports:
+      -"8080:80"
+    command:
+      cd htb-frontend/;
+      npm install;
+      npm run dev -- --host
+  websocket:
+      container_name: htb-ws
+    image: node
+    ports:
+      -"8990:8990"
+    command:
+      cd websocket/;
+      npm install;
+      node index.js
+  api:
+    container_name: htb-api
+    image: python
+    ports:
+      -"5000:5000"
+    command:
+      cd api;
+      python -m venv .venv;
+      . .venv/bin/activate;
+      pip install -r requirements.txt;
+      flask run --host=0.0.0.0;
