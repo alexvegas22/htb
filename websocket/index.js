@@ -4,7 +4,7 @@ dotenv.config();
 const wsPort = process.env.WEBSOCKET_PORT;
 const wss = new WebSocketServer({ port: wsPort });
 
-let messageId = 1; // Counter for generating unique message IDs
+let messageId = 1; 
 const messages = [];
 const rooms = new Map();
 const clients = new Map();

@@ -2,7 +2,9 @@ from flask import jsonify
 from redis import Redis
 import json
 
-redis = Redis(host='localhost', port=6379)
+redis_host = os.getenv("REDIS_HOST", "localhost")
+redis_port = int(os.getenv("REDIS_PORT", 6379))
+redis = Redis(host=redis_host, redis_port)
 
 def get_new_board_index(board):
     return redis.llen(board)

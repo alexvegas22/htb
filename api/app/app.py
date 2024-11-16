@@ -8,10 +8,13 @@ app.config['UPLOAD_FOLDER'] = 'static/uploads'
 from app.src.routes.post_routes import post_routes
 from app.src.routes.images_routes import images_routes
 
-CORS(app,resources={"/*":{"origins":"*"}})
+CORS(app)
 app.register_blueprint(post_routes)
 app.register_blueprint(images_routes)
 
 @app.route('/')
 def index():
     return 'Index Page' 
+
+if __name__ == "__main__":
+    app.run()
