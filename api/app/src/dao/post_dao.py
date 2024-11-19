@@ -1,11 +1,18 @@
 from flask import jsonify
-from redis import Redis
+from redis import Redis, RedisError
 import os
 import json
 
-redis_host = os.getenv("REDIS_HOST","http://htb-redis")
+redis_host = os.getenv("REDIS_HOST","127.0.0.1")
 redis_port = int(os.getenv("REDIS_PORT", 6379))
-redis = Redis(host=redis_host, port=redis_port)
+
+try:
+    redis = Redis(host=redis_host, port=redis_port)
+    redis.ping()  # Ping the Redis server to check if it's up
+    print("Connected to Redis!")
+except RedisError as e:
+    print(f"Could not connect to Redis: {e}")
+
 
 def get_new_board_index(board):
     return redis.llen(board)

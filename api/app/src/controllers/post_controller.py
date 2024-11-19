@@ -25,6 +25,7 @@ def get_or_add_posts(request, board):
             new_post_data['image'] = str(image_filename)
 
             try:
+                os.makedirs(os.path.dirname(image_path), exist_ok=True)
                 image_file.save(image_path)
                 new_post = Post(**new_post_data)
                 return add_post(new_post, board), 201
@@ -32,8 +33,8 @@ def get_or_add_posts(request, board):
                 print(f'Error uploading image: {str(e)}')
 
         else :
-            return 'Missing image file', 401
+            return jsonify({"error": "Missing image file"}), 400
                 
     else:
-        return 'Method not allowed', 405
+        return jsonify({"error": "Method not allowed"}), 405 
  

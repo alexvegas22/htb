@@ -2,25 +2,26 @@ networks:
   htb:
     driver: bridge
 
-services:    
+volumes:
+  local_redis_data: {}
+  
+services:
   redis:
-    container_name: htb-redis
-    image: redis
-    command: redis-server --bind 0.0.0.0 --protected-mode yes
+    image: "redis:alpine"
     ports:
       - "6379:6379"
     networks:
       - htb
-
+  
   front-end:
     container_name: htb-web
     image: node
     ports:
       - "5173:5173"
     environment:
-      - VITE_API_URL=http://htb-api
+      - VITE_API_URL=http://localhost
       - VITE_API_PORT=5000
-      - VITE_WEBSOCKET_URL=ws://htb-ws
+      - VITE_WEBSOCKET_URL=ws://localhost
       - VITE_WEBSOCKET_PORT=8990
     networks:
       - htb
@@ -28,7 +29,6 @@ services:
       - ./htb-frontend:/htb-frontend 
     command: >
       sh -c "cd /htb-frontend &&
-             npm audit fix &&
              npm install &&
              npm run dev -- --host"
 
@@ -52,7 +52,7 @@ services:
     container_name: htb-api
     image: python
     environment:
-      - REDIS_HOST=htb-redis
+      - REDIS_HOST=redis
       - REDIS_PORT=6379
 
     ports:
@@ -60,7 +60,9 @@ services:
     networks:
       - htb
     volumes:
+      - ./api/static/uploads:/api/static/uploads
       - ./api:/api
+      
     command: >
       sh -c "cd /api &&
              python -m venv .venv &&
