@@ -165,6 +165,6 @@ input{
 
 button {
     cursor: pointer;
-    bakcground: green;
+    background: green;
 }
 </style>

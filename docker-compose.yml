@@ -10,9 +10,9 @@ services:
     ports:
       - "5173:5173"
     environment:
-      - VITE_API_URL=http://localhost
+      - VITE_API_URL=http://api.htb.v34l.com
       - VITE_API_PORT=5000
-      - VITE_WEBSOCKET_URL=ws://localhost
+      - VITE_WEBSOCKET_URL=ws://ws.htb.v34l.com
       - VITE_WEBSOCKET_PORT=8990
     volumes:
       - ./htb-frontend:/htb-frontend 
