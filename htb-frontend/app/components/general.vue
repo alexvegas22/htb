@@ -12,7 +12,7 @@ const apiUrl = import.meta.env.VITE_API_URL
 const apiPort = import.meta.env.VITE_API_PORT
 
 const fetchData = async () => {
-  try {
+     try {
     const response = await fetch(`${apiUrl}:${apiPort}/${board.value}/posts`);
     posts.value = await response.json();
   } catch (error) {

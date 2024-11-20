@@ -9,8 +9,8 @@ const image = ref(null);
 const content = ref('');
 const isHidden = ref(true);
 const apiUrl = import.meta.env.VITE_API_URL
-const apiPort = import.meta.env.VITE_API_PORT
-const postUrl = ref(`${apiUrl}:${apiPort}/`);
+const apiPort = import.meta.env.VITE_API_PORT 
+const postUrl = ref(`${apiUrl}/`);
 const selectedFile = ref(null)
 const emit = defineEmits(['update'])
 

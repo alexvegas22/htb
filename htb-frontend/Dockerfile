@@ -3,6 +3,10 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY ./ .
+ENV VITE_API_URL=api.htb.v34l.com
+ENV VITE_API_URL=80
+ENV VITE_WEBSOCKET_URL=ws.htb.v34l.com
+ENV VITE_WEBSOCKET_PORT=80
 RUN npm run build
 
 FROM nginx as production-stage
