@@ -31,7 +31,7 @@ services:
     volumes:
       - ./websocket:/websocket
     command: >
-      sh -c "cd /websocket &&
+      sh -c "cd /htb-ws &&
              npm install &&
              node index.js"
              
@@ -48,7 +48,7 @@ services:
       - ./api:/api
       
     command: >
-      sh -c "cd /api &&
+      sh -c "cd /htb-api &&
              python -m venv .venv &&
              . .venv/bin/activate &&
              pip install -r requirements.txt &&

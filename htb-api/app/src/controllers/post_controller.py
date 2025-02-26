@@ -9,7 +9,7 @@ def get_or_add_posts(request, board):
     if request.method == 'GET':
         return get_board_posts(board)
     elif request.method == 'POST':
-        new_post_data = request.form.to_dict()  # Get form data as a dictionary
+        new_post_data = request.form.to_dict()
         new_post_data['board'] = board
 
         if 'image' in request.files:

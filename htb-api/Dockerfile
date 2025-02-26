@@ -8,8 +8,8 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Set environment variables for Redis
-ENV REDIS_HOST=redis.htb.v34l.com
-ENV REDIS_PORT=80
+ENV REDIS_HOST=redis://redis-htb-service
+ENV REDIS_PORT=6379
 
 # Create a virtual environment and install dependencies
 RUN python -m venv .venv && \
