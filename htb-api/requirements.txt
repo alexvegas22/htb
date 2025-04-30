@@ -1,6 +1,0 @@
-Flask
-gunicorn
-flask_cors
-werkzeug
-redis
-python-dotenv
