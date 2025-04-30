@@ -1,4 +1,4 @@
-#+TITLE: HTB 
+#+TITLE: HTB
 
 *What is our app about*
 
@@ -6,38 +6,6 @@ HTB is a Vue.js forum/chat web app.
 We created this as a way to communicate between friends and keep in touch without
 having to rely on social media apps.
 
-*Live Demo*
+*Visit the site here*
 
-[[http://v34l.com:5173]]
-
-*How do i run it?*
-
-HTB relies on 3 different apps : A vue.js frontend, a Flask API connected to Redis and a NodeJS websocket server.
-
-To run the entire application, execute the [[file:./deploy.sh][deploy]] script 
-#+BEGIN_SRC BASH
-./deploy.sh
-#+END_SRC
-If you only want to run the front end :
-#+BEGIN_SRC BASH
-cd htb-frontend
-npm install
-npm run dev
-#+END_SRC
-And for the backend :
-#+BEGIN_SRC BASH
-redis-server &
-python -m venv .venv
-. .venv/bin/activate
-pip install -r api/requirements.txt
-cd api/
-flask run &
-redis-server &
-#+END_SRC
-For the chatting websocket server :
-#+BEGIN_SRC BASH
-cd websocket/
-npm install
-node index.js &
-#+END_SRC
-
+[[https://htb.v34l.com]]
