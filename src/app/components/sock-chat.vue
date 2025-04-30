@@ -2,9 +2,9 @@
 <template>
 <div class="chatbox rounded-container">
   <div class="response">
-    
+
     <div v-for="msg in messages">
-      
+
       <div v-if="msg.event==='message' || msg.event==='command'" >
 	<span v-if="msg.username==name">[</span>{{msg.username}}#{{msg.room}}<span v-if="msg.username==name">]</span> <span v-if="msg.username!=name">: </span>{{ msg.text }}
       </div>
@@ -17,11 +17,11 @@
       <div v-if="msg.event=='join'" class="event">
 	{{msg.username}} joined the room
       </div>
-      
+
        <div v-if="msg.event=='leave'" >
 	{{msg.username}} left the room
        </div>
-      
+
     </div>
   </div>
   <div class="prompt">
@@ -42,9 +42,8 @@ const emit = defineEmits(['inFocus', 'submit'])
 const name = ref(props.chat.name)
 const room=ref(props.chat.room)
 const websocket_url = import.meta.env.VITE_WEBSOCKET_URL;
-const websocket_port = import.meta.env.VITE_WEBSOCKET_PORT;
 const initWebSocket = () => {
-    socket = new WebSocket(`${websocket_url}:${websocket_port}`);
+    socket = new WebSocket(`${websocket_url}`);
 
   socket.addEventListener('open', () => {
       console.log('WebSocket connected');
@@ -55,20 +54,20 @@ const initWebSocket = () => {
 	   socket.send(JSON.stringify({event: 'leave', username: name.value, room: room.value }));
        }
 
-    
+
   });
 
     socket.addEventListener('message', (event) => {
 	const data = JSON.parse(event.data);
 	    messages.value.push({ event : data.event, username: data.username, text: data.text, room: data.room });
-	
+
   });
 
     socket.addEventListener('close', () => {
 	socket.send(JSON.stringify({event: 'leave', username:name.value , room: room.value}));
 	console.log('WebSocket closed');
   });
-}; 
+};
 
 const sendMessage = () => {
     if (socket.readyState === WebSocket.OPEN) {
@@ -77,10 +76,10 @@ const sendMessage = () => {
 	}
 	if (message.value[0]=='/'){
 	    socket.send(JSON.stringify({event: 'command', username:name.value,  text: message.value, room: room.value }));
-	    
+
 	}
 	else{socket.send(JSON.stringify({event: 'message', username:name.value,  text: message.value, room: room.value }));}
-    
+
     message.value = '';
   }
 };
@@ -128,7 +127,7 @@ onUnmounted(() => {
     justify-content: space-between;
 }
 .event{
-    color : red;    
+    color : red;
 }
 .output{
     color: gray;

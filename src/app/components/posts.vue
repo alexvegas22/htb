@@ -3,15 +3,12 @@ import { ref, computed } from 'vue';
 
 const { post, board } = defineProps(['post', 'board']);
   const apiUrl = import.meta.env.VITE_API_URL
-  const apiPort = import.meta.env.VITE_API_PORT
-  const url = `${apiUrl}:${apiPort}`
-
 </script>
 
 <template>
   <div class="post rounded-container">
     <div class="post-image">
-      <img :src="`${url}/${board}/${post.image}`" />
+      <img :src="`${apiUrl}/${board}/${post.image}`" />
       <router-link :to="{ name: 'image', params: { imageName: post.image , boardName: board}}" class="image-link">
         {{ post.image }}
       </router-link>
@@ -21,7 +18,7 @@ const { post, board } = defineProps(['post', 'board']);
       <h3 v-if="post.title">{{ post.title }}</h3>
       <div class="post-content" v-if="post.content">
         <p>{{ post.content }}</p>
-      
+
       </div>
       </div>
       <div class="post-id">
@@ -64,7 +61,7 @@ overflow: hidden;
     display : flex;
     flex-direction: column;
     justify-content: space-between;
-    
+
 }
 .post-id{
     align-self:flex-end;
@@ -73,7 +70,7 @@ overflow: hidden;
     margin-left: 15px;
     padding : 15px;
     text-align: left;
-    
+
 }
   @media (max-width: 768px) {
 

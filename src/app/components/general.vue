@@ -9,11 +9,10 @@ const posts = ref([]);
 const board = ref('general')
 
 const apiUrl = import.meta.env.VITE_API_URL
-const apiPort = import.meta.env.VITE_API_PORT
 
 const fetchData = async () => {
      try {
-    const response = await fetch(`${apiUrl}:${apiPort}/${board.value}/posts`);
+    const response = await fetch(`${apiUrl}/${board.value}/posts`);
     posts.value = await response.json();
   } catch (error) {
     console.error('Error fetching posts:', error);
@@ -36,7 +35,7 @@ watchEffect(() => {
 <template>
 <div class="home-container">
   <div class="sidebar">
-    
+
   <Board :board="board"  @switchboard="switchBoard"/>
   <CreatePost :board="board" @update="update"/>
 </div>

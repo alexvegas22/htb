@@ -9,8 +9,6 @@ const image = ref(null);
 const content = ref('');
 const isHidden = ref(true);
 const apiUrl = import.meta.env.VITE_API_URL
-const apiPort = import.meta.env.VITE_API_PORT 
-const postUrl = ref(`${apiUrl}/`);
 const selectedFile = ref(null)
 const emit = defineEmits(['update'])
 
@@ -26,14 +24,14 @@ const createPost = async () => {
             formData.append('title', title.value);
             formData.append('image', selectedFile.value);
             formData.append('content', content.value);
-	    let url = `${postUrl.value}${props.board}/posts`;
+	    let url = `${apiUrl}/${props.board}/posts`;
             const response = await axios.post(url, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
 	     emit('update')
-            console.log('Response:', response.data); 
+            console.log('Response:', response.data);
         } catch (error) {
             console.error('Error:', error.message);
         }
@@ -61,7 +59,7 @@ function hideForm() {
 
       <label for="content"> Text :</label><br>
       <input v-model="content"><br>
-      
+
       <button @click.prevent="createPost">Post to {{props.board}}</button>
     </form>
   </div>
@@ -82,7 +80,7 @@ function hideForm() {
     transition:
     color 0.5s,
     filter 0.5s;
- 
+
 }
 .hidden{
     display:none;
