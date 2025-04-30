@@ -22,8 +22,6 @@ const createPost = async () => {
   if (title.value && image.value && content.value){
     try {
       let url = `${postUrl.value}/${props.board}/posts`;
-      console.log('url',url )
-      console.log('env value', apiUrl )
       const formData = new FormData();
       formData.append('title', title.value);
       formData.append('image', selectedFile.value);
