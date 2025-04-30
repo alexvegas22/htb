@@ -9,6 +9,7 @@ const image = ref(null);
 const content = ref('');
 const isHidden = ref(true);
 const apiUrl = import.meta.env.VITE_API_URL
+const postUrl = ref(`${apiUrl}`);
 const selectedFile = ref(null)
 const emit = defineEmits(['update'])
 
@@ -24,7 +25,7 @@ const createPost = async () => {
             formData.append('title', title.value);
             formData.append('image', selectedFile.value);
             formData.append('content', content.value);
-	    let url = `${apiUrl}/${props.board}/posts`;
+	    let url = `${postUrl.value}/${props.board}/posts`;
             const response = await axios.post(url, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
