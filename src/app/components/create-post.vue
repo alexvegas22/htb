@@ -19,57 +19,59 @@ const handleFileChange = () => {
 };
 
 const createPost = async () => {
-    if (title.value && image.value && content.value){
-        try {
-            const formData = new FormData();
-            formData.append('title', title.value);
-            formData.append('image', selectedFile.value);
-            formData.append('content', content.value);
-	    let url = `${postUrl.value}/${props.board}/posts`;
-            const response = await axios.post(url, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
-	     emit('update')
-            console.log('Response:', response.data);
-        } catch (error) {
-            console.error('Error:', error.message);
+  if (title.value && image.value && content.value){
+    try {
+      let url = `${postUrl.value}/${props.board}/posts`;
+      console.log('url',url )
+      console.log('env value', apiUrl )
+      const formData = new FormData();
+      formData.append('title', title.value);
+      formData.append('image', selectedFile.value);
+      formData.append('content', content.value);
+      const response = await axios.post(url, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
         }
-        isHidden.value = true;
-        title.value = "";
-        image.value = null;
-        content.value = "";
+      });
+      emit('update')
+      console.log('Response:', response.data);
+    } catch (error) {
+      console.error('Error:', error.message);
     }
+    isHidden.value = true;
+    title.value = "";
+    image.value = null;
+    content.value = "";
+  }
 };
 
 function hideForm() {
-    isHidden.value = !isHidden.value;
+  isHidden.value = !isHidden.value;
 }
 </script>
 
 <template>
-  <div class="rounded-container">
-    <button @click="hideForm" :class="{ hidden: !isHidden }" >Create a new post</button>
-    <form :class="{ hidden: isHidden }" class="post-form">
-      <label for="title">Title :</label><br>
-      <input v-model="title"><br>
+<div class="rounded-container">
+  <button @click="hideForm" :class="{ hidden: !isHidden }" >Create a new post</button>
+  <form :class="{ hidden: isHidden }" class="post-form">
+    <label for="title">Title :</label><br>
+    <input v-model="title"><br>
 
-      <label for="image">Image link :</label><br>
-      <input ref="image" type="file" accept="image/*" @change="handleFileChange"><br>
+    <label for="image">Image link :</label><br>
+    <input ref="image" type="file" accept="image/*" @change="handleFileChange"><br>
 
-      <label for="content"> Text :</label><br>
-      <input v-model="content"><br>
+    <label for="content"> Text :</label><br>
+    <input v-model="content"><br>
 
-      <button @click.prevent="createPost">Post to {{props.board}}</button>
-    </form>
-  </div>
+    <button @click.prevent="createPost">Post to {{props.board}}</button>
+  </form>
+</div>
 </template>
 
 <script>
-  export default {
+export default {
   name: 'CreatePost',
-  };
+};
 
 </script>
 <style scoped>
@@ -79,8 +81,8 @@ function hideForm() {
     padding : 10px;
     border-radius : 5px;
     transition:
-    color 0.5s,
-    filter 0.5s;
+	color 0.5s,
+	filter 0.5s;
 
 }
 .hidden{
@@ -93,24 +95,24 @@ input{
 
 
 .form-container {
-  max-width: 350px;
-  margin: auto;
+    max-width: 350px;
+    margin: auto;
 }
 
 .contact-form {
-  display: grid;
-  gap: 15px;
+    display: grid;
+    gap: 15px;
 }
 
 label {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 input {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-  box-sizing: border-box;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
 }
 
 </style>
