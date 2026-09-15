@@ -41,7 +41,7 @@ const props = defineProps({
 const emit = defineEmits(['inFocus', 'submit'])
 const name = ref(props.chat.name)
 const room=ref(props.chat.room)
-const websocket_url = import.meta.env.VITE_WEBSOCKET_URL;
+const websocket_url = import.meta.env.WEBSOCKET_URL;
 const initWebSocket = () => {
     socket = new WebSocket(`${websocket_url}`);
 

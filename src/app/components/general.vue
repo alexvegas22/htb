@@ -8,7 +8,7 @@ import Board from './boards.vue';
 const posts = ref([]);
 const board = ref('general')
 
-const apiUrl = import.meta.env.VITE_API_URL
+const apiUrl = import.meta.env.API_URL
 
 const fetchData = async () => {
      try {

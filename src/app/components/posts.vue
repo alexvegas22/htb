@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue';
 
 const { post, board } = defineProps(['post', 'board']);
-  const apiUrl = import.meta.env.VITE_API_URL
+  const apiUrl = import.meta.env.API_URL
 </script>
 
 <template>
